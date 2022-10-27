@@ -3,6 +3,7 @@ import './App.css';
 import LostTemple, { gridSize } from './LostTemple';
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
+import PossiblePathsGrid from './PossiblePathsGrid';
 
 function App() {
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialOpenRooms);
@@ -51,7 +52,12 @@ function App() {
     setClosedDoors(closed);
   };
 
-  return (
+  // TODO: make this a grid
+  const showGrid = false;
+
+  return showGrid ? (
+    <PossiblePathsGrid possiblePaths={filteredLostTemplePaths} />
+  ) : (
     <div className="App">
       <LostTemple
         openRooms={openRooms}
@@ -111,7 +117,7 @@ function toggle(open: Set<string>, closed: Set<string>, name: string) {
   }
 }
 
-function getOpenRooms(path: LostTemplePath): ReadonlySet<string> {
+export function getOpenRooms(path: LostTemplePath): ReadonlySet<string> {
   return new Set(Array.from(path.openDoors).flatMap((door) => door.split(',')));
 }
 
