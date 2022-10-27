@@ -28,6 +28,7 @@ function App() {
     filteredLostTemplePaths,
     (roomName, path) => getOpenRooms(path).has(roomName),
   );
+
   const doorPercentMap = createPercentMap(
     difference(doorNames, union(openDoors, closedDoors)),
     filteredLostTemplePaths,
@@ -70,7 +71,7 @@ function App() {
 function createPercentMap(
   names: ReadonlySet<string>,
   paths: readonly LostTemplePath[],
-  matchesPath: (name: string, path: LostTemplePath) => Boolean,
+  matchesPath: (name: string, path: LostTemplePath) => boolean,
 ): ReadonlyMap<string, number> {
   const totalPathCount = paths.reduce((p, c) => p + c.count, 0);
   const map = new Map<string, number>();

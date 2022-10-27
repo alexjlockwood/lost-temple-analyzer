@@ -56,13 +56,16 @@ function LostTemple({
   const cells = roomNames.flatMap((row, r) => {
     return row.flatMap((_, c) => {
       const roomName = getRoomName(r, c);
-      const roomColor = getColor(openRooms, closedRooms, roomName);
+      const roomPercent = roomPercentMap?.get(roomName);
+      const roomPercentRounded = roomPercent === undefined ? undefined : Math.round(roomPercent);
+      const roomColor = getColor(openRooms, closedRooms, roomName, roomPercentRounded);
       const rowCells = [
         <Cell
+          key={roomName}
           name={showRoomNames ? roomName : undefined}
           bounds={getRoomBounds(r, c)}
           color={roomColor}
-          onClick={onRoomClick ? () => onRoomClick(roomName) : undefined}
+          onClick={isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];
       if (c !== gridSize - 1) {
@@ -71,7 +74,7 @@ function LostTemple({
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}`;
-        const doorColor = getColor(openDoors, closedDoors, doorName);
+        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
         const doorBounds = getRightDoorBounds(r, c);
         const updatedDoorBounds = {
           ...doorBounds,
@@ -80,6 +83,7 @@ function LostTemple({
         };
         rowCells.push(
           <Cell
+            key={doorName}
             name={doorPercentString}
             bounds={updatedDoorBounds}
             color={doorColor}
@@ -93,7 +97,7 @@ function LostTemple({
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}`;
-        const doorColor = getColor(openDoors, closedDoors, doorName);
+        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
         const doorBounds = getBottomDoorBounds(r, c);
         const updatedDoorBounds = {
           ...doorBounds,
@@ -102,6 +106,7 @@ function LostTemple({
         };
         rowCells.push(
           <Cell
+            key={doorName}
             name={doorPercentString}
             bounds={updatedDoorBounds}
             color={doorColor}
@@ -112,7 +117,6 @@ function LostTemple({
       return rowCells;
     });
   });
-  // TODO: add keys to fix react lint error
   return <Container>{cells}</Container>;
 }
 
@@ -124,8 +128,27 @@ function getColor(
   openNames: ReadonlySet<string>,
   closedNames: ReadonlySet<string> | undefined,
   name: string,
+  percent: number | undefined,
 ): string {
-  return openNames.has(name) ? '#0f0' : closedNames && closedNames.has(name) ? '#f00' : '#fff';
+  if (openNames.has(name)) {
+    return getGreenColor();
+  } else if (closedNames?.has(name)) {
+    return getRedColor();
+  } else if (percent === 100) {
+    return getGreenColor(0.3);
+  } else if (percent === 0) {
+    return getRedColor(0.3);
+  } else {
+    return 'rgba(255, 255, 255, 1)';
+  }
+}
+
+function getGreenColor(alpha = 1) {
+  return `rgba(75, 231, 122, ${alpha})`;
+}
+
+function getRedColor(alpha: number = 1) {
+  return `rgba(219, 54, 21, ${alpha})`;
 }
 
 function getRoomBounds(r: number, c: number): Bounds {
