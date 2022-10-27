@@ -36,6 +36,7 @@ function App() {
   );
 
   const onRoomClick = (roomName: string) => {
+    console.log(roomName);
     const open = new Set(openRooms);
     const closed = new Set(closedRooms);
     toggle(open, closed, roomName);

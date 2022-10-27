@@ -18,18 +18,6 @@ const roomNames = ['E', 'D', 'C', 'B', 'A'].map((rowLetter) =>
   Array.from({ length: gridSize }, (_, i) => i + 1).map((colNumber) => `${rowLetter}${colNumber}`),
 );
 
-// isOpenRoom = { it in appState.openRooms },
-// isClosedRoom = { it in appState.closedRooms },
-// isOpenDoor = { it in appState.openDoors },
-// isClosedDoor = { it in appState.closedDoors },
-// onRoomClick = { appState.toggleRoom(it) },
-// onDoorClick = { appState.toggleDoor(it) },
-// onRoomDrag = { appState.selectRoom(it) },
-// onDoorDrag = { appState.selectDoor(it) },
-// getRoomPercent = { roomPercentMap[it] },
-// getDoorPercent = { doorPercentMap[it] },
-// showRoomNames = true,
-
 interface LostTempleProps {
   readonly openRooms: ReadonlySet<string>;
   readonly openDoors: ReadonlySet<string>;
@@ -65,7 +53,7 @@ function LostTemple({
           name={showRoomNames ? roomName : undefined}
           bounds={getRoomBounds(r, c)}
           color={roomColor}
-          onClick={isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
+          onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];
       if (c !== gridSize - 1) {
@@ -73,7 +61,7 @@ function LostTemple({
         const doorPercent = doorPercentMap?.get(doorName);
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
-          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}`;
+          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
         const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
         const doorBounds = getRightDoorBounds(r, c);
         const updatedDoorBounds = {
@@ -96,7 +84,7 @@ function LostTemple({
         const doorPercent = doorPercentMap?.get(doorName);
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
-          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}`;
+          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
         const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
         const doorBounds = getBottomDoorBounds(r, c);
         const updatedDoorBounds = {
@@ -143,7 +131,7 @@ function getColor(
   }
 }
 
-function getGreenColor(alpha = 1) {
+function getGreenColor(alpha: number = 1) {
   return `rgba(75, 231, 122, ${alpha})`;
 }
 
@@ -199,11 +187,11 @@ function getBottomDoorName(r: number, c: number): string {
 }
 
 function isRoomA3(r: number, c: number): boolean {
-  return getRoomName(r, c) == 'A3';
+  return getRoomName(r, c) === 'A3';
 }
 
 function isBottomDoorA3B3(r: number, c: number): boolean {
-  return getBottomDoorName(r, c) == 'A3,B3';
+  return getBottomDoorName(r, c) === 'A3,B3';
 }
 
 export interface Bounds {
