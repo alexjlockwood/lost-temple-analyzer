@@ -1,7 +1,9 @@
 {
-  "name": "lost-temple",
+  "name": "lost-temple-path-analyzer",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://alexjlockwood.github.io",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build",
   "dependencies": {
     "@mui/material": "^5.10.11",
     "@mui/styled-engine-sc": "^5.10.6",
@@ -48,6 +50,7 @@
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.26.0",
     "eslint-plugin-react": "^7.31.10",
+    "gh-pages": "^4.0.0",
     "prettier": "2.7.1",
     "typescript": "^4.8.4"
   }
