@@ -7,10 +7,6 @@ const roomSizeFactor = 0.7;
 const doorSizeFactor = 1 - roomSizeFactor;
 export const gridSize = 5;
 
-// TODO: make this dynamic
-// const minSize = 900;
-export const strokeWidth = 5;
-
 export const roomNames = ['E', 'D', 'C', 'B', 'A'].map((rowLetter) =>
   Array.from({ length: gridSize }, (_, i) => i + 1).map((colNumber) => `${rowLetter}${colNumber}`),
 );
@@ -61,6 +57,7 @@ function LostTemple({
           name={showRoomNames ? roomName : undefined}
           bounds={getRoomBounds(size, r, c)}
           color={roomColor}
+          strokeWidth={getStrokeWidth(size)}
           onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];
@@ -83,6 +80,7 @@ function LostTemple({
             name={doorPercentString}
             bounds={updatedDoorBounds}
             color={doorColor}
+            strokeWidth={getStrokeWidth(size)}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
@@ -106,6 +104,7 @@ function LostTemple({
             name={doorPercentString}
             bounds={updatedDoorBounds}
             color={doorColor}
+            strokeWidth={getStrokeWidth(size)}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
@@ -163,8 +162,8 @@ function getRedColor(alpha: number = 1) {
 }
 
 export function getRoomBounds(size: number, r: number, c: number): Bounds {
-  const roomOffsetX = (getRoomSize(size) + getDoorSize(size) - strokeWidth * 2) * c;
-  const roomOffsetY = (getRoomSize(size) + getDoorSize(size) - strokeWidth * 2) * r;
+  const roomOffsetX = (getRoomSize(size) + getDoorSize(size) - getStrokeWidth(size) * 2) * c;
+  const roomOffsetY = (getRoomSize(size) + getDoorSize(size) - getStrokeWidth(size) * 2) * r;
   return {
     left: roomOffsetX,
     top: roomOffsetY,
@@ -175,7 +174,7 @@ export function getRoomBounds(size: number, r: number, c: number): Bounds {
 
 export function getRightDoorBounds(size: number, r: number, c: number): Bounds {
   const roomBounds = getRoomBounds(size, r, c);
-  const doorOffsetX = roomBounds.left + getRoomSize(size) - strokeWidth;
+  const doorOffsetX = roomBounds.left + getRoomSize(size) - getStrokeWidth(size);
   const doorOffsetY = roomBounds.top;
   return {
     left: doorOffsetX,
@@ -188,7 +187,7 @@ export function getRightDoorBounds(size: number, r: number, c: number): Bounds {
 export function getBottomDoorBounds(size: number, r: number, c: number): Bounds {
   const roomBounds = getRoomBounds(size, r, c);
   const doorOffsetX = roomBounds.left;
-  const doorOffsetY = roomBounds.top + getRoomSize(size) - strokeWidth;
+  const doorOffsetY = roomBounds.top + getRoomSize(size) - getStrokeWidth(size);
   return {
     left: doorOffsetX,
     top: doorOffsetY,
@@ -197,8 +196,12 @@ export function getBottomDoorBounds(size: number, r: number, c: number): Bounds 
   };
 }
 
+function getStrokeWidth(size: number) {
+  return size / 200;
+}
+
 function getSizePlusStrokes(size: number) {
-  return size + strokeWidth * (gridSize - 1) * 2;
+  return size + getStrokeWidth(size) * (gridSize - 1) * 2;
 }
 
 function getRoomSize(size: number) {

@@ -1,16 +1,17 @@
 import React from 'react';
 import './App.css';
 import styled, { css } from 'styled-components';
-import { Bounds, strokeWidth } from './LostTemple';
+import { Bounds } from './LostTemple';
 
 interface Props {
   readonly name?: string;
   readonly bounds: Bounds;
   readonly color: string;
+  readonly strokeWidth: number;
   readonly onClick?: () => void;
 }
 
-function Cell({ name, bounds, color, onClick }: Props) {
+function Cell({ name, bounds, color, strokeWidth, onClick }: Props) {
   return (
     <Square bounds={bounds} strokeWidth={strokeWidth} color={color} onClick={onClick}>
       {name ? name : undefined}
