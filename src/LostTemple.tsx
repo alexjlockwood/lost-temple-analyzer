@@ -57,8 +57,7 @@ function LostTemple({
           name={showRoomNames ? roomName : undefined}
           bounds={getRoomBounds(size, r, c)}
           color={roomColor}
-          strokeWidth={getStrokeWidth(size)}
-          //onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
+          onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];
       if (c !== gridSize - 1) {
@@ -81,7 +80,7 @@ function LostTemple({
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
-            //onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
+            onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
       }
@@ -105,7 +104,7 @@ function LostTemple({
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
-            //onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
+            onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
       }
