@@ -57,6 +57,7 @@ function LostTemple({
           name={showRoomNames ? roomName : undefined}
           bounds={getRoomBounds(size, r, c)}
           color={roomColor}
+          strokeWidth={getStrokeWidth(size)}
           onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];

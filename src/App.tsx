@@ -119,6 +119,8 @@ function App() {
     setClosedDoors(updatedClosedDoors);
   };
 
+  // TODO: figure out why touch events on mobile arent working
+
   const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (event) => {
     console.log(event.clientX, event.clientY);
     if (pointerId !== undefined) {
