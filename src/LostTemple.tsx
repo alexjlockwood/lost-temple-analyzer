@@ -77,7 +77,9 @@ function LostTemple({
         rowCells.push(
           <Cell
             key={doorName}
-            name={doorPercentString}
+            name={
+              doorPercentRounded === 0 || doorPercentRounded === 100 ? undefined : doorPercentString
+            }
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
@@ -101,7 +103,9 @@ function LostTemple({
         rowCells.push(
           <Cell
             key={doorName}
-            name={doorPercentString}
+            name={
+              doorPercentRounded === 0 || doorPercentRounded === 100 ? undefined : doorPercentString
+            }
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
