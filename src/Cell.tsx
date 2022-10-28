@@ -23,6 +23,8 @@ const Square = styled.div<{
   readonly color: string;
   readonly strokeWidth: number;
 }>`
+  display: grid;
+  place-items: center;
   box-sizing: border-box;
   position: absolute;
   background: ${(props) => props.color};

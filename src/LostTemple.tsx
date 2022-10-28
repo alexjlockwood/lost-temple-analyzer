@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
 import Cell from './Cell';
 import styled, { css } from 'styled-components';
@@ -8,17 +8,15 @@ const doorSizeFactor = 1 - roomSizeFactor;
 export const gridSize = 5;
 
 // TODO: make this dynamic
-const minSize = 900;
+// const minSize = 900;
 export const strokeWidth = 5;
-const sizePlusStrokes = minSize + strokeWidth * (gridSize - 1) * 2;
-const roomSize = (sizePlusStrokes * roomSizeFactor) / gridSize;
-const doorSize = (sizePlusStrokes * doorSizeFactor) / (gridSize - 1);
 
-const roomNames = ['E', 'D', 'C', 'B', 'A'].map((rowLetter) =>
+export const roomNames = ['E', 'D', 'C', 'B', 'A'].map((rowLetter) =>
   Array.from({ length: gridSize }, (_, i) => i + 1).map((colNumber) => `${rowLetter}${colNumber}`),
 );
 
 interface LostTempleProps {
+  readonly size: number;
   readonly openRooms: ReadonlySet<string>;
   readonly openDoors: ReadonlySet<string>;
   readonly closedRooms?: ReadonlySet<string>;
@@ -28,9 +26,13 @@ interface LostTempleProps {
   readonly onRoomClick?: (roomName: string) => void;
   readonly onDoorClick?: (doorName: string) => void;
   readonly showRoomNames?: boolean;
+  readonly onPointerDown?: React.PointerEventHandler<HTMLDivElement>;
+  readonly onPointerMove?: React.PointerEventHandler<HTMLDivElement>;
+  readonly onPointerUp?: React.PointerEventHandler<HTMLDivElement>;
 }
 
 function LostTemple({
+  size,
   openRooms,
   openDoors,
   closedRooms,
@@ -40,7 +42,13 @@ function LostTemple({
   onRoomClick,
   onDoorClick,
   showRoomNames,
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
 }: LostTempleProps) {
+  const roomSize = getRoomSize(size);
+  const doorSize = getDoorSize(size);
+
   const cells = roomNames.flatMap((row, r) => {
     return row.flatMap((_, c) => {
       const roomName = getRoomName(r, c);
@@ -51,7 +59,7 @@ function LostTemple({
         <Cell
           key={roomName}
           name={showRoomNames ? roomName : undefined}
-          bounds={getRoomBounds(r, c)}
+          bounds={getRoomBounds(size, r, c)}
           color={roomColor}
           onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
@@ -63,7 +71,7 @@ function LostTemple({
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
         const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
-        const doorBounds = getRightDoorBounds(r, c);
+        const doorBounds = getRightDoorBounds(size, r, c);
         const updatedDoorBounds = {
           ...doorBounds,
           top: doorBounds.top + (roomSize - doorSize) / 2,
@@ -86,7 +94,7 @@ function LostTemple({
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
         const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
-        const doorBounds = getBottomDoorBounds(r, c);
+        const doorBounds = getBottomDoorBounds(size, r, c);
         const updatedDoorBounds = {
           ...doorBounds,
           left: doorBounds.left + (roomSize - doorSize) / 2,
@@ -105,11 +113,26 @@ function LostTemple({
       return rowCells;
     });
   });
-  return <Container>{cells}</Container>;
+  return (
+    <Container
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      width={size}
+      height={size}
+    >
+      {cells}
+    </Container>
+  );
 }
 
-const Container = styled.div`
-  position: relative;
+const Container = styled.div<{
+  readonly width: number;
+  readonly height: number;
+}>`
+  position: absolute;
+  width: ${(props) => props.width}px;
+  height: ${(props) => props.height}px;
 `;
 
 function getColor(
@@ -139,58 +162,70 @@ function getRedColor(alpha: number = 1) {
   return `rgba(219, 54, 21, ${alpha})`;
 }
 
-function getRoomBounds(r: number, c: number): Bounds {
-  const roomOffsetX = (roomSize + doorSize - strokeWidth * 2) * c;
-  const roomOffsetY = (roomSize + doorSize - strokeWidth * 2) * r;
+export function getRoomBounds(size: number, r: number, c: number): Bounds {
+  const roomOffsetX = (getRoomSize(size) + getDoorSize(size) - strokeWidth * 2) * c;
+  const roomOffsetY = (getRoomSize(size) + getDoorSize(size) - strokeWidth * 2) * r;
   return {
     left: roomOffsetX,
     top: roomOffsetY,
-    right: roomOffsetX + roomSize,
-    bottom: roomOffsetY + roomSize,
+    right: roomOffsetX + getRoomSize(size),
+    bottom: roomOffsetY + getRoomSize(size),
   };
 }
 
-function getRightDoorBounds(r: number, c: number): Bounds {
-  const roomBounds = getRoomBounds(r, c);
-  const doorOffsetX = roomBounds.left + roomSize - strokeWidth;
+export function getRightDoorBounds(size: number, r: number, c: number): Bounds {
+  const roomBounds = getRoomBounds(size, r, c);
+  const doorOffsetX = roomBounds.left + getRoomSize(size) - strokeWidth;
   const doorOffsetY = roomBounds.top;
   return {
     left: doorOffsetX,
     top: doorOffsetY,
-    right: doorOffsetX + doorSize,
-    bottom: doorOffsetY + roomSize,
+    right: doorOffsetX + getDoorSize(size),
+    bottom: doorOffsetY + getRoomSize(size),
   };
 }
 
-function getBottomDoorBounds(r: number, c: number): Bounds {
-  const roomBounds = getRoomBounds(r, c);
+export function getBottomDoorBounds(size: number, r: number, c: number): Bounds {
+  const roomBounds = getRoomBounds(size, r, c);
   const doorOffsetX = roomBounds.left;
-  const doorOffsetY = roomBounds.top + roomSize - strokeWidth;
+  const doorOffsetY = roomBounds.top + getRoomSize(size) - strokeWidth;
   return {
     left: doorOffsetX,
     top: doorOffsetY,
-    right: doorOffsetX + roomSize,
-    bottom: doorOffsetY + doorSize,
+    right: doorOffsetX + getRoomSize(size),
+    bottom: doorOffsetY + getDoorSize(size),
   };
 }
 
-function getRoomName(r: number, c: number): string {
+function getSizePlusStrokes(size: number) {
+  return size + strokeWidth * (gridSize - 1) * 2;
+}
+
+function getRoomSize(size: number) {
+  return (getSizePlusStrokes(size) * roomSizeFactor) / gridSize;
+}
+
+function getDoorSize(size: number) {
+  return (getSizePlusStrokes(size) * doorSizeFactor) / (gridSize - 1);
+}
+
+export function getRoomName(r: number, c: number): string {
   return roomNames[r][c];
 }
 
-function getRightDoorName(r: number, c: number): string {
+export function getRightDoorName(r: number, c: number): string {
   return [getRoomName(r, c), roomNames[r][c + 1]].sort().join(',');
 }
 
-function getBottomDoorName(r: number, c: number): string {
+export function getBottomDoorName(r: number, c: number): string {
   return [getRoomName(r, c), roomNames[r + 1][c]].sort().join(',');
 }
 
-function isRoomA3(r: number, c: number): boolean {
+export function isRoomA3(r: number, c: number): boolean {
   return getRoomName(r, c) === 'A3';
 }
 
-function isBottomDoorA3B3(r: number, c: number): boolean {
+export function isBottomDoorA3B3(r: number, c: number): boolean {
   return getBottomDoorName(r, c) === 'A3,B3';
 }
 
