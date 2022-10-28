@@ -200,6 +200,11 @@ function App() {
       />
     );
   return <Container ref={ref}>{lostTemple}</Container>;
+  // return (
+  //   <Container ref={ref}>
+  //     <PossiblePathsGrid possiblePaths={filteredLostTemplePaths} />
+  //   </Container>
+  // );
 }
 
 const Container = styled.div`
