@@ -1,9 +1,7 @@
 {
   "name": "lost-temple-path-analyzer",
   "version": "0.1.0",
-  "homepage": "https://alexjlockwood.github.io",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d build",
+  "homepage": "https://alexjlockwood.github.io/lost-temple-path-analyzer",
   "dependencies": {
     "@mui/material": "^5.10.11",
     "@mui/styled-engine-sc": "^5.10.6",
@@ -24,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

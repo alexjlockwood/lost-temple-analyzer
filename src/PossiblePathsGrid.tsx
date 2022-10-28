@@ -11,11 +11,17 @@ interface PossiblePathsGridProps {
   readonly possiblePaths: readonly LostTemplePath[];
 }
 
-function PossiblePathsGrid({ possiblePaths }: PossiblePathsGridProps) {
-  const lostTemplePaths = possiblePaths.map((p) => {
-    return <LostTemple openRooms={getOpenRooms(p)} openDoors={p.openDoors} showRoomNames={false} />;
-  });
-  return <div>{lostTemplePaths}</div>;
-}
+// function PossiblePathsGrid({ possiblePaths }: PossiblePathsGridProps) {
+//   const lostTemplePaths = possiblePaths.map((p) => {
+//     return (
+//       <LostTemple
+//         openRooms={getOpenRooms(p)}
+//         openDoors={p.openDoors}
+//         showRoomNames={false}
+//       />
+//     );
+//   });
+//   return <div>{lostTemplePaths}</div>;
+// }
 
-export default PossiblePathsGrid;
+// export default PossiblePathsGrid;
