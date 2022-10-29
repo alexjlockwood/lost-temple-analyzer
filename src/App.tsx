@@ -16,6 +16,9 @@ import LostTemple, {
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
 
+// TODO: google analytics
+// TODO: rename app
+
 interface Offset {
   readonly x: number;
   readonly y: number;
