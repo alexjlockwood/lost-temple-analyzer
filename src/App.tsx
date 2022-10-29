@@ -42,8 +42,6 @@ function App() {
   const [width, setWidth] = useState<number | undefined>(undefined);
   const [height, setHeight] = useState<number | undefined>(undefined);
 
-  console.log(width, height);
-
   // This function calculates width and height of the list
   const updateSize = () => {
     const newWidth = ref?.current?.clientWidth;
@@ -61,7 +59,6 @@ function App() {
   // Update 'width' and 'height' when the window resizes
   useEffect(() => {
     window.addEventListener('resize', updateSize);
-    console.log('window resize');
   }, []);
 
   const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
@@ -207,29 +204,23 @@ function App() {
   return (
     <Container>
       <LostTempleContainer ref={ref}>{lostTemple}</LostTempleContainer>
-      {/* <Paper elevation={6}> */}
-      <PossiblePathsGrid possiblePaths={filteredLostTemplePaths} />
-      {/* </Paper> */}
     </Container>
   );
 }
 
 const Container = styled.div`
-  width: 100%;
-  height: 100vh;
   display: flex;
+  width: 100vw;
+  height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
 `;
 
 const LostTempleContainer = styled.div`
-  height: 100vh;
-  flex-grow: 1;
-`;
-
-const Item = styled.div`
-  width: 100px;
-  height: 100px;
-  background: #f00;
-  flex-grow: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 function intersects(
