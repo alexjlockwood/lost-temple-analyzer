@@ -19,6 +19,7 @@ import { Button, Typography } from '@mui/material';
 // TODO: google analytics
 // TODO: set up manifest.json so can be put on home screen on phones
 // TODO: add social media links and thumbnails and favicon stuff
+// TODO: it doesnt work in landscape on phones
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
@@ -111,7 +112,6 @@ function App() {
   };
 
   const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    console.log(event.clientX, event.clientY);
     if (pointerId !== undefined) {
       return;
     }
@@ -207,16 +207,16 @@ function App() {
   return (
     <AppContainer>
       <ColumnContainer>
-        <Typography align="center" variant="h3">
+        {/* <Typography align="center" variant="h3">
           Lost Temple Analyzer
-        </Typography>
+        </Typography> */}
         <Typography align="center" variant="subtitle1">
           Click or drag the Lost Temple below to view the door probabilities of different paths.
         </Typography>
-        <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
         <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
-          Reset selections
+          Reset grid
         </Button>
+        <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
       </ColumnContainer>
     </AppContainer>
   );
@@ -234,7 +234,7 @@ const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 `;
 
 const LostTempleContainer = styled.div`
