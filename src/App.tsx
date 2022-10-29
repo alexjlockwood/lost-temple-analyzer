@@ -201,6 +201,7 @@ function App() {
     <AppContainer>
       <ColumnContainer>
         <Typography variant="h3">Lost Temple Analyzer</Typography>
+        <Typography variant="subtitle1">Click or drag the Lost Temple rooms & doors.</Typography>
         <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
         <Button disabled={resetSelectionsDisabled} onClick={onResetSelectionsClick} color="inherit">
           Reset selections
