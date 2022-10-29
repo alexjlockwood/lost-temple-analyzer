@@ -34,7 +34,6 @@ const Square = styled.div<{
   top: ${(props) => props.bounds.top}px;
   width: ${(props) => props.bounds.right - props.bounds.left}px;
   height: ${(props) => props.bounds.bottom - props.bounds.top}px;
-  user-select: none;
 `;
 
 export default Cell;

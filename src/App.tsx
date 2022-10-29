@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import LostTemple, {
   Bounds,
@@ -14,8 +14,6 @@ import LostTemple, {
 } from './LostTemple';
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
-import PossiblePathsGrid from './PossiblePathsGrid';
-import { Paper } from '@mui/material';
 
 // TODO: google analytics
 // TODO: rename app
@@ -34,34 +32,22 @@ function App() {
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
 
-  // This ref is connected to the list
   const ref = useRef<HTMLDivElement>(null);
 
-  // The size of the list
-  // It will be updated later
-  const [width, setWidth] = useState<number | undefined>(undefined);
-  const [height, setHeight] = useState<number | undefined>(undefined);
+  const [lostTempleSize, setLostTempleSize] = useState<number | undefined>(undefined);
 
-  // This function calculates width and height of the list
   const updateSize = () => {
-    const newWidth = ref?.current?.clientWidth;
-    setWidth(newWidth);
-
-    const newHeight = ref?.current?.clientHeight;
-    setHeight(newHeight);
+    const width = ref?.current?.clientWidth;
+    const height = ref?.current?.clientHeight;
+    const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
+    setLostTempleSize(size);
   };
 
-  // Get 'width' and 'height' after the initial render and every time the list changes
-  useEffect(() => {
-    updateSize();
-  }, []);
+  useEffect(updateSize, []);
 
-  // Update 'width' and 'height' when the window resizes
   useEffect(() => {
     window.addEventListener('resize', updateSize);
   }, []);
-
-  const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
 
   const filteredLostTemplePaths = lostTemplePaths
     .filter((path) => {
@@ -136,7 +122,7 @@ function App() {
     setLastPointerOffset({ x: offsetX, y: offsetY });
   };
   const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    if (pointerId !== event.pointerId || size === undefined) {
+    if (pointerId !== event.pointerId || lostTempleSize === undefined) {
       return;
     }
 
@@ -151,19 +137,21 @@ function App() {
         for (let c = 0; c < gridSize; c++) {
           if (
             !isRoomA3(r, c) &&
-            intersects(getRoomBounds(size, r, c), offsetX, offsetY, prevX, prevY)
+            intersects(getRoomBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
           ) {
             selectRoom(getRoomName(r, c));
           }
           if (c !== gridSize - 1) {
-            if (intersects(getRightDoorBounds(size, r, c), offsetX, offsetY, prevX, prevY)) {
+            if (
+              intersects(getRightDoorBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
+            ) {
               selectDoor(getRightDoorName(r, c));
             }
           }
           if (r !== gridSize - 1) {
             if (
               !isBottomDoorA3B3(r, c) &&
-              intersects(getBottomDoorBounds(size, r, c), offsetX, offsetY, prevX, prevY)
+              intersects(getBottomDoorBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
             ) {
               selectDoor(getBottomDoorName(r, c));
             }
@@ -181,12 +169,13 @@ function App() {
     setIsDragging(false);
     setLastPointerOffset(undefined);
   };
+
   const lostTemple =
-    size === undefined ? (
+    lostTempleSize === undefined ? (
       <></>
     ) : (
       <LostTemple
-        size={size}
+        size={lostTempleSize}
         openRooms={openRooms}
         openDoors={openDoors}
         closedRooms={closedRooms}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { LostTemplePath } from './LostTemplePath';
-import Grid from '@mui/material/Grid'; // Grid version 2
 import LostTemple from './LostTemple';
 import { getOpenRooms } from './App';
 import styled from '@emotion/styled';
