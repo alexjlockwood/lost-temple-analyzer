@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import styled, { css } from 'styled-components';
+import styled from '@emotion/styled';
 import { Bounds } from './LostTemple';
 
 interface Props {

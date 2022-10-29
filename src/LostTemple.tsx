@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './App.css';
+import React from 'react';
 import Cell from './Cell';
-import styled, { css } from 'styled-components';
+import styled from '@emotion/styled';
 
 const roomSizeFactor = 0.7;
 const doorSizeFactor = 1 - roomSizeFactor;
@@ -133,10 +132,9 @@ const Container = styled.div<{
   readonly width: number;
   readonly height: number;
 }>`
-  position: absolute;
+  position: relative;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  margin: 16px;
 `;
 
 function getColor(

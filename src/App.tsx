@@ -1,6 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import './App.css';
+import styled from '@emotion/styled';
 import LostTemple, {
   Bounds,
   getBottomDoorBounds,
@@ -15,6 +14,7 @@ import LostTemple, {
 } from './LostTemple';
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
+import PossiblePathsGrid from './PossiblePathsGrid';
 
 // TODO: google analytics
 // TODO: rename app
@@ -214,7 +214,6 @@ const Container = styled.div`
   display: grid;
   place-items: center;
   min-height: 100vh;
-  position: relative;
 `;
 
 function intersects(
