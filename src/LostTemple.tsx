@@ -206,9 +206,9 @@ export function getBottomDoorBounds(size: number, r: number, c: number): Bounds 
 
 function getRoomFontSize(size: number): number {
   if (size <= 400) {
-    return 10;
+    return 14;
   } else if (size <= 600) {
-    return 16;
+    return 18;
   } else {
     return 32;
   }

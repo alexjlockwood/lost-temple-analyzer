@@ -17,8 +17,10 @@ import { lostTemplePaths } from './LostTemplePathData';
 import { Button, Typography } from '@mui/material';
 
 // TODO: google analytics
+// TODO: set up manifest.json so can be put on home screen on phones
+// TODO: add social media links and thumbnails and favicon stuff
 
-// TODO: make this percentage based instead?g
+// TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 
 interface Offset {
