@@ -136,6 +136,7 @@ const Container = styled.div<{
   position: absolute;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
+  margin: 16px;
 `;
 
 function getColor(

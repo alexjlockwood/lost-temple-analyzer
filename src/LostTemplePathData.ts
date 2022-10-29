@@ -1,6 +1,4 @@
-import { LostTemplePath } from './LostTemplePath';
-
-export const lostTemplePaths: readonly LostTemplePath[] = [
+export const lostTemplePaths = [
   {
     openDoors: new Set([
       'A1,A2',
@@ -16,7 +14,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 120,
+    count: 123,
   },
   {
     openDoors: new Set([
@@ -88,7 +86,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 21,
+    count: 22,
   },
   {
     openDoors: new Set([
@@ -111,7 +109,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 9,
+    count: 11,
   },
   {
     openDoors: new Set([
@@ -148,7 +146,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 33,
+    count: 34,
   },
   {
     openDoors: new Set([
@@ -184,7 +182,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 72,
+    count: 80,
   },
   {
     openDoors: new Set([
@@ -206,7 +204,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 8,
+    count: 9,
   },
   {
     openDoors: new Set([
@@ -226,7 +224,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 9,
+    count: 10,
   },
   {
     openDoors: new Set([
@@ -311,7 +309,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 39,
+    count: 40,
   },
   {
     openDoors: new Set([
@@ -330,7 +328,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 74,
+    count: 77,
   },
   {
     openDoors: new Set([
@@ -391,7 +389,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 7,
+    count: 8,
   },
   {
     openDoors: new Set([
@@ -457,6 +455,29 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
   },
   {
     openDoors: new Set([
+      'A1,A2',
+      'A1,B1',
+      'A2,A3',
+      'B1,B2',
+      'B1,C1',
+      'B2,B3',
+      'B3,C3',
+      'C1,D1',
+      'C3,C4',
+      'C4,C5',
+      'C4,D4',
+      'C5,D5',
+      'D1,D2',
+      'D2,D3',
+      'D3,D4',
+      'D5,E5',
+      'E3,E4',
+      'E4,E5',
+    ]),
+    count: 1,
+  },
+  {
+    openDoors: new Set([
       'A2,A3',
       'A2,B2',
       'B1,B2',
@@ -469,7 +490,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 81,
+    count: 85,
   },
   {
     openDoors: new Set([
@@ -492,7 +513,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 21,
+    count: 22,
   },
   {
     openDoors: new Set([
@@ -602,7 +623,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 8,
+    count: 10,
   },
   {
     openDoors: new Set([
@@ -635,7 +656,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 18,
+    count: 20,
   },
   {
     openDoors: new Set([
@@ -680,7 +701,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,D5',
       'E2,E3',
     ]),
-    count: 53,
+    count: 54,
   },
   {
     openDoors: new Set([
@@ -701,7 +722,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,D5',
       'E2,E3',
     ]),
-    count: 28,
+    count: 29,
   },
   {
     openDoors: new Set([
@@ -721,7 +742,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,D5',
       'E2,E3',
     ]),
-    count: 60,
+    count: 63,
   },
   {
     openDoors: new Set([
@@ -738,7 +759,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,D5',
       'E2,E3',
     ]),
-    count: 74,
+    count: 79,
   },
   {
     openDoors: new Set([
@@ -822,7 +843,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'D3,E3',
     ]),
-    count: 19,
+    count: 21,
   },
   {
     openDoors: new Set([
@@ -862,7 +883,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'E2,E3',
     ]),
-    count: 28,
+    count: 30,
   },
   {
     openDoors: new Set([
@@ -881,7 +902,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'D3,E3',
     ]),
-    count: 30,
+    count: 31,
   },
   {
     openDoors: new Set([
@@ -900,7 +921,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,E4',
       'E3,E4',
     ]),
-    count: 12,
+    count: 15,
   },
   {
     openDoors: new Set([
@@ -934,7 +955,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 25,
+    count: 26,
   },
   {
     openDoors: new Set([
@@ -949,7 +970,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'C3,D3',
       'D3,E3',
     ]),
-    count: 11,
+    count: 12,
   },
   {
     openDoors: new Set([
@@ -964,7 +985,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,D3',
       'D3,E3',
     ]),
-    count: 12,
+    count: 14,
   },
   {
     openDoors: new Set([
@@ -979,7 +1000,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 84,
+    count: 86,
   },
   {
     openDoors: new Set([
@@ -1009,7 +1030,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 50,
+    count: 53,
   },
   {
     openDoors: new Set([
@@ -1024,7 +1045,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 99,
+    count: 103,
   },
   {
     openDoors: new Set([
@@ -1043,7 +1064,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
   },
   {
     openDoors: new Set(['A2,A3', 'A2,B2', 'B2,B3', 'B2,C2', 'B3,C3', 'C2,C3', 'C3,D3', 'D3,E3']),
-    count: 46,
+    count: 47,
   },
   {
     openDoors: new Set([
@@ -1077,7 +1098,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'D3,E3',
     ]),
-    count: 12,
+    count: 13,
   },
   {
     openDoors: new Set([
@@ -1150,7 +1171,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,E3',
       'D4,D5',
     ]),
-    count: 8,
+    count: 9,
   },
   {
     openDoors: new Set([
@@ -1169,7 +1190,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,E4',
       'E3,E4',
     ]),
-    count: 4,
+    count: 5,
   },
   {
     openDoors: new Set([
@@ -1186,7 +1207,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'E2,E3',
     ]),
-    count: 17,
+    count: 18,
   },
   {
     openDoors: new Set([
@@ -1201,7 +1222,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'D3,E3',
     ]),
-    count: 19,
+    count: 21,
   },
   {
     openDoors: new Set([
@@ -1234,7 +1255,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,E3',
       'D4,D5',
     ]),
-    count: 31,
+    count: 32,
   },
   {
     openDoors: new Set([
@@ -1252,7 +1273,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,E4',
       'E3,E4',
     ]),
-    count: 16,
+    count: 17,
   },
   {
     openDoors: new Set([
@@ -1269,7 +1290,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 107,
+    count: 116,
   },
   {
     openDoors: new Set([
@@ -1383,7 +1404,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 29,
+    count: 30,
   },
   {
     openDoors: new Set([
@@ -1401,7 +1422,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 27,
+    count: 29,
   },
   {
     openDoors: new Set([
@@ -1437,7 +1458,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 82,
+    count: 84,
   },
   {
     openDoors: new Set([
@@ -1479,7 +1500,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 13,
+    count: 14,
   },
   {
     openDoors: new Set([
@@ -1564,7 +1585,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 42,
+    count: 43,
   },
   {
     openDoors: new Set([
@@ -1583,7 +1604,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 53,
+    count: 57,
   },
   {
     openDoors: new Set([
@@ -1603,7 +1624,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 16,
+    count: 17,
   },
   {
     openDoors: new Set([
@@ -1621,7 +1642,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 17,
+    count: 18,
   },
   {
     openDoors: new Set([
@@ -1644,7 +1665,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 14,
+    count: 16,
   },
   {
     openDoors: new Set([
@@ -1686,7 +1707,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 25,
+    count: 28,
   },
   {
     openDoors: new Set([
@@ -1706,7 +1727,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,D5',
       'E2,E3',
     ]),
-    count: 23,
+    count: 25,
   },
   {
     openDoors: new Set([
@@ -1745,7 +1766,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E3,E4',
       'E4,E5',
     ]),
-    count: 86,
+    count: 90,
   },
   {
     openDoors: new Set([
@@ -1768,7 +1789,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 13,
+    count: 15,
   },
   {
     openDoors: new Set([
@@ -1793,7 +1814,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 9,
+    count: 10,
   },
   {
     openDoors: new Set([
@@ -1862,7 +1883,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 7,
+    count: 10,
   },
   {
     openDoors: new Set([
@@ -1884,7 +1905,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 32,
+    count: 33,
   },
   {
     openDoors: new Set([
@@ -1903,7 +1924,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,D3',
       'D3,E3',
     ]),
-    count: 7,
+    count: 10,
   },
   {
     openDoors: new Set([
@@ -1922,7 +1943,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 46,
+    count: 48,
   },
   {
     openDoors: new Set([
@@ -1941,7 +1962,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,D3',
       'D3,E3',
     ]),
-    count: 12,
+    count: 13,
   },
   {
     openDoors: new Set([
@@ -1960,7 +1981,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 64,
+    count: 65,
   },
   {
     openDoors: new Set([
@@ -1975,43 +1996,43 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'C3,D3',
       'C4,C5',
       'D3,E3',
+    ]),
+    count: 47,
+  },
+  {
+    openDoors: new Set([
+      'A3,A4',
+      'A4,A5',
+      'A5,B5',
+      'B3,B4',
+      'B3,C3',
+      'B4,B5',
+      'B5,C5',
+      'C3,C4',
+      'C3,D3',
+      'C4,C5',
+      'D2,D3',
+      'D2,E2',
+      'E2,E3',
+    ]),
+    count: 54,
+  },
+  {
+    openDoors: new Set([
+      'A3,A4',
+      'A4,A5',
+      'A5,B5',
+      'B4,B5',
+      'B4,C4',
+      'B5,C5',
+      'C3,C4',
+      'C3,D3',
+      'C4,C5',
+      'D2,D3',
+      'D2,E2',
+      'E2,E3',
     ]),
     count: 44,
-  },
-  {
-    openDoors: new Set([
-      'A3,A4',
-      'A4,A5',
-      'A5,B5',
-      'B3,B4',
-      'B3,C3',
-      'B4,B5',
-      'B5,C5',
-      'C3,C4',
-      'C3,D3',
-      'C4,C5',
-      'D2,D3',
-      'D2,E2',
-      'E2,E3',
-    ]),
-    count: 53,
-  },
-  {
-    openDoors: new Set([
-      'A3,A4',
-      'A4,A5',
-      'A5,B5',
-      'B4,B5',
-      'B4,C4',
-      'B5,C5',
-      'C3,C4',
-      'C3,D3',
-      'C4,C5',
-      'D2,D3',
-      'D2,E2',
-      'E2,E3',
-    ]),
-    count: 42,
   },
   {
     openDoors: new Set([
@@ -2028,7 +2049,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,D4',
       'E2,E3',
     ]),
-    count: 14,
+    count: 15,
   },
   {
     openDoors: new Set([
@@ -2043,7 +2064,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'C4,C5',
       'D3,E3',
     ]),
-    count: 29,
+    count: 30,
   },
   {
     openDoors: new Set([
@@ -2130,11 +2151,11 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 38,
+    count: 40,
   },
   {
     openDoors: new Set(['A3,A4', 'A4,B4', 'B3,B4', 'B3,C3', 'B4,C4', 'C3,C4', 'C3,D3', 'D3,E3']),
-    count: 24,
+    count: 25,
   },
   {
     openDoors: new Set([
@@ -2149,7 +2170,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 30,
+    count: 32,
   },
   {
     openDoors: new Set([
@@ -2196,7 +2217,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D3,E3',
       'D4,D5',
     ]),
-    count: 33,
+    count: 34,
   },
   {
     openDoors: new Set([
@@ -2211,7 +2232,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D4,E4',
       'E3,E4',
     ]),
-    count: 14,
+    count: 15,
   },
   {
     openDoors: new Set([
@@ -2268,7 +2289,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 65,
+    count: 70,
   },
   {
     openDoors: new Set([
@@ -2298,7 +2319,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,E2',
       'E2,E3',
     ]),
-    count: 43,
+    count: 44,
   },
   {
     openDoors: new Set([
@@ -2316,7 +2337,7 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'D2,D3',
       'D3,E3',
     ]),
-    count: 6,
+    count: 7,
   },
   {
     openDoors: new Set([
@@ -2352,6 +2373,6 @@ export const lostTemplePaths: readonly LostTemplePath[] = [
       'E1,E2',
       'E2,E3',
     ]),
-    count: 72,
+    count: 73,
   },
 ];
