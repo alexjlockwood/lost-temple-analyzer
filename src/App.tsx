@@ -14,6 +14,7 @@ import LostTemple, {
 } from './LostTemple';
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
+import { Button, Typography } from '@mui/material';
 
 // TODO: google analytics
 // TODO: rename app
@@ -32,22 +33,16 @@ function App() {
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
 
-  const ref = useRef<HTMLDivElement>(null);
-
+  const lostTempleRef = useRef<HTMLDivElement>(null);
   const [lostTempleSize, setLostTempleSize] = useState<number | undefined>(undefined);
-
-  const updateSize = () => {
-    const width = ref?.current?.clientWidth;
-    const height = ref?.current?.clientHeight;
+  const updateLostTempleSize = () => {
+    const width = lostTempleRef?.current?.clientWidth;
+    const height = lostTempleRef?.current?.clientHeight;
     const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
     setLostTempleSize(size);
   };
-
-  useEffect(updateSize, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', updateSize);
-  }, []);
+  useEffect(updateLostTempleSize, []);
+  useEffect(() => window.addEventListener('resize', updateLostTempleSize), []);
 
   const filteredLostTemplePaths = lostTemplePaths
     .filter((path) => {
@@ -98,6 +93,7 @@ function App() {
     updatedClosedRooms.delete(roomName);
     setClosedRooms(updatedClosedRooms);
   };
+
   const selectDoor = (doorName: string) => {
     const updatedOpenDoors = new Set(openDoors);
     updatedOpenDoors.add(doorName);
@@ -106,8 +102,6 @@ function App() {
     updatedClosedDoors.delete(doorName);
     setClosedDoors(updatedClosedDoors);
   };
-
-  // TODO: figure out why touch events on mobile arent working
 
   const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (event) => {
     console.log(event.clientX, event.clientY);
@@ -170,6 +164,19 @@ function App() {
     setLastPointerOffset(undefined);
   };
 
+  const resetSelectionsDisabled =
+    areSetsEqual(openRooms, initialOpenRooms) &&
+    closedRooms.size === 0 &&
+    openDoors.size === 0 &&
+    closedDoors.size === 0;
+
+  const onResetSelectionsClick = () => {
+    setOpenRooms(initialOpenRooms);
+    setClosedRooms(new Set());
+    setOpenDoors(new Set());
+    setClosedDoors(new Set());
+  };
+
   const lostTemple =
     lostTempleSize === undefined ? (
       <></>
@@ -191,26 +198,43 @@ function App() {
       />
     );
   return (
-    <Container>
-      <LostTempleContainer ref={ref}>{lostTemple}</LostTempleContainer>
-    </Container>
+    <AppContainer>
+      <ColumnContainer>
+        <Typography variant="h3">Lost Temple Analyzer</Typography>
+        <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
+        <Button disabled={resetSelectionsDisabled} onClick={onResetSelectionsClick} color="inherit">
+          Reset selections
+        </Button>
+      </ColumnContainer>
+    </AppContainer>
   );
 }
 
-const Container = styled.div`
-  display: flex;
-  width: 100vw;
+const AppContainer = styled.div`
   height: 100vh;
   padding: 16px;
   box-sizing: border-box;
+`;
+
+const ColumnContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 `;
 
 const LostTempleContainer = styled.div`
   display: grid;
   place-items: center;
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
 `;
+
+function areSetsEqual(set1: ReadonlySet<string>, set2: ReadonlySet<string>): boolean {
+  return set1.size === set2.size && Array.from(set1).every((s) => set2.has(s));
+}
 
 function intersects(
   bounds: Bounds,
