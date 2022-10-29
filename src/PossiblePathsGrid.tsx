@@ -16,19 +16,33 @@ function PossiblePathsGrid({ possiblePaths }: PossiblePathsGridProps) {
     return (
       <LostTemple
         key={key}
-        size={300}
+        size={150}
         openRooms={getOpenRooms(p)}
         openDoors={p.openDoors}
         showRoomNames={false}
       />
     );
   });
-  return <Container>{lostTemplePaths}</Container>;
+  const length = possiblePaths.length;
+  const possiblePathSuffix = length === 1 ? '' : 's';
+  const possiblePathText = `${length} possible path${possiblePathSuffix}`;
+  return (
+    <Container>
+      {possiblePathText}
+      <GridContainer>{lostTemplePaths}</GridContainer>
+    </Container>
+  );
 }
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+
+const GridContainer = styled.div`
+  display: flex;
   flex-wrap: wrap;
+  width: 600px;
 `;
 
 export default PossiblePathsGrid;

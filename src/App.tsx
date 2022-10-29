@@ -15,6 +15,7 @@ import LostTemple, {
 import { LostTemplePath } from './LostTemplePath';
 import { lostTemplePaths } from './LostTemplePathData';
 import PossiblePathsGrid from './PossiblePathsGrid';
+import { Paper } from '@mui/material';
 
 // TODO: google analytics
 // TODO: rename app
@@ -60,6 +61,7 @@ function App() {
   // Update 'width' and 'height' when the window resizes
   useEffect(() => {
     window.addEventListener('resize', updateSize);
+    console.log('window resize');
   }, []);
 
   const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
@@ -202,18 +204,32 @@ function App() {
         onPointerUp={onPointerUp}
       />
     );
-  return <Container ref={ref}>{lostTemple}</Container>;
-  // return (
-  //   <Container ref={ref}>
-  //     <PossiblePathsGrid possiblePaths={filteredLostTemplePaths} />
-  //   </Container>
-  // );
+  return (
+    <Container>
+      <LostTempleContainer ref={ref}>{lostTemple}</LostTempleContainer>
+      {/* <Paper elevation={6}> */}
+      <PossiblePathsGrid possiblePaths={filteredLostTemplePaths} />
+      {/* </Paper> */}
+    </Container>
+  );
 }
 
 const Container = styled.div`
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+`;
+
+const LostTempleContainer = styled.div`
+  height: 100vh;
+  flex-grow: 1;
+`;
+
+const Item = styled.div`
+  width: 100px;
+  height: 100px;
+  background: #f00;
+  flex-grow: 1;
 `;
 
 function intersects(
