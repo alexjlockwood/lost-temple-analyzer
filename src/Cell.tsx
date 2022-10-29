@@ -1,19 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Bounds } from './LostTemple';
+import { Typography } from '@mui/material';
 
 interface Props {
   readonly name?: string;
   readonly bounds: Bounds;
   readonly color: string;
   readonly strokeWidth: number;
+  readonly fontSize?: number;
   readonly onClick?: () => void;
 }
 
-function Cell({ name, bounds, color, strokeWidth, onClick }: Props) {
+function Cell({ name, bounds, color, strokeWidth, fontSize, onClick }: Props) {
   return (
     <Square bounds={bounds} strokeWidth={strokeWidth} color={color} onClick={onClick}>
-      {name ? name : undefined}
+      {name ? <Typography fontSize={fontSize}>{name}</Typography> : undefined}
     </Square>
   );
 }

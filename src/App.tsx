@@ -164,13 +164,13 @@ function App() {
     setLastPointerOffset(undefined);
   };
 
-  const resetSelectionsDisabled =
+  const resetDisabled =
     areSetsEqual(openRooms, initialOpenRooms) &&
     closedRooms.size === 0 &&
     openDoors.size === 0 &&
     closedDoors.size === 0;
 
-  const onResetSelectionsClick = () => {
+  const onResetClick = () => {
     setOpenRooms(initialOpenRooms);
     setClosedRooms(new Set());
     setOpenDoors(new Set());
@@ -200,10 +200,14 @@ function App() {
   return (
     <AppContainer>
       <ColumnContainer>
-        <Typography variant="h3">Lost Temple Analyzer</Typography>
-        <Typography variant="subtitle1">Click or drag the Lost Temple rooms & doors.</Typography>
+        <Typography align="center" variant="h3">
+          Lost Temple Analyzer
+        </Typography>
+        <Typography align="center" variant="subtitle1">
+          Click or drag the Lost Temple below to view the door probabilities of different paths.
+        </Typography>
         <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
-        <Button disabled={resetSelectionsDisabled} onClick={onResetSelectionsClick} color="inherit">
+        <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
           Reset selections
         </Button>
       </ColumnContainer>

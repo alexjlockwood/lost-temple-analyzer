@@ -43,6 +43,9 @@ function LostTemple({
 }: LostTempleProps) {
   const roomSize = getRoomSize(size);
   const doorSize = getDoorSize(size);
+  const roomFontSize = getRoomFontSize(size);
+  const doorFontSize = getDoorFontSize(size);
+  console.log(roomSize, doorSize, roomFontSize, doorFontSize);
 
   const cells = roomNames.flatMap((row, r) => {
     return row.flatMap((_, c) => {
@@ -57,6 +60,7 @@ function LostTemple({
           bounds={getRoomBounds(size, r, c)}
           color={roomColor}
           strokeWidth={getStrokeWidth(size)}
+          fontSize={roomFontSize}
           onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
         />,
       ];
@@ -82,6 +86,7 @@ function LostTemple({
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
+            fontSize={doorFontSize}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
@@ -108,6 +113,7 @@ function LostTemple({
             bounds={updatedDoorBounds}
             color={doorColor}
             strokeWidth={getStrokeWidth(size)}
+            fontSize={doorFontSize}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
           />,
         );
@@ -197,6 +203,26 @@ export function getBottomDoorBounds(size: number, r: number, c: number): Bounds 
     right: doorOffsetX + getRoomSize(size),
     bottom: doorOffsetY + getDoorSize(size),
   };
+}
+
+function getRoomFontSize(size: number): number {
+  if (size <= 400) {
+    return 10;
+  } else if (size <= 600) {
+    return 16;
+  } else {
+    return 32;
+  }
+}
+
+function getDoorFontSize(size: number): number {
+  if (size <= 400) {
+    return 8;
+  } else if (size <= 600) {
+    return 12;
+  } else {
+    return 16;
+  }
 }
 
 function getStrokeWidth(size: number) {
