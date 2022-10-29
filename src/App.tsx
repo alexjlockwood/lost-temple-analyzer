@@ -17,7 +17,9 @@ import { lostTemplePaths } from './LostTemplePathData';
 import { Button, Typography } from '@mui/material';
 
 // TODO: google analytics
-// TODO: rename app
+
+// TODO: make this percentage based instead?g
+const maxLostTempleSize = 720;
 
 interface Offset {
   readonly x: number;
@@ -38,7 +40,10 @@ function App() {
   const updateLostTempleSize = () => {
     const width = lostTempleRef?.current?.clientWidth;
     const height = lostTempleRef?.current?.clientHeight;
-    const size = width === undefined || height === undefined ? undefined : Math.min(width, height);
+    const size =
+      width === undefined || height === undefined
+        ? undefined
+        : Math.min(maxLostTempleSize, Math.min(width, height));
     setLostTempleSize(size);
   };
   useEffect(updateLostTempleSize, []);

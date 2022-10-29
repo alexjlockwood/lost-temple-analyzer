@@ -45,7 +45,6 @@ function LostTemple({
   const doorSize = getDoorSize(size);
   const roomFontSize = getRoomFontSize(size);
   const doorFontSize = getDoorFontSize(size);
-  console.log(roomSize, doorSize, roomFontSize, doorFontSize);
 
   const cells = roomNames.flatMap((row, r) => {
     return row.flatMap((_, c) => {
@@ -154,20 +153,20 @@ function getColor(
   } else if (closedNames?.has(name)) {
     return getRedColor();
   } else if (percent === 100) {
-    return getGreenColor(0.3);
+    return getGreenColor(true);
   } else if (percent === 0) {
-    return getRedColor(0.3);
+    return getRedColor(true);
   } else {
     return 'rgba(255, 255, 255, 1)';
   }
 }
 
-function getGreenColor(alpha: number = 1) {
-  return `rgba(75, 231, 122, ${alpha})`;
+function getGreenColor(isLight: boolean = false) {
+  return isLight ? '#daf7dc' : `rgba(75, 231, 122)`;
 }
 
-function getRedColor(alpha: number = 1) {
-  return `rgba(219, 54, 21, ${alpha})`;
+function getRedColor(isLight: boolean = false) {
+  return isLight ? '#efc7be' : `rgba(219, 54, 21)`;
 }
 
 export function getRoomBounds(size: number, r: number, c: number): Bounds {
