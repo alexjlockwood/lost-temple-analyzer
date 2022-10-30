@@ -78,7 +78,9 @@ function App() {
         );
 
   // TODO: make this dynamic based on screen size
-  const panelWidth = 300;
+  const panelWidth = 600;
+  const panelNumColumns = 2;
+  const isPanelVisible = false;
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
@@ -271,7 +273,13 @@ function App() {
           </HeaderContainer>
           <LostTempleContainer>{lostTemple}</LostTempleContainer>
         </ColumnContainer>
-        <PossiblePathsPanel width={panelWidth} possiblePaths={filteredLostTemplePaths} />
+        {isPanelVisible ? (
+          <PossiblePathsPanel
+            width={panelWidth}
+            numColumns={panelNumColumns}
+            possiblePaths={filteredLostTemplePaths}
+          />
+        ) : undefined}
       </RowContainer>
       <Snackbar
         open={isSuccessSnackbarShown}
@@ -300,10 +308,10 @@ const RowContainer = styled.div`
 `;
 
 const ColumnContainer = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
   gap: 8px;
