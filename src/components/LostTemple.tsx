@@ -52,27 +52,27 @@ function LostTemple({
 
   const cells: JSX.Element[] = [];
 
+  const getPercentString = (percent: number | undefined) => {
+    const rounded = percent === undefined ? undefined : Math.round(percent);
+    return rounded === 0 || rounded === 100 || rounded === undefined ? undefined : `${rounded}%`;
+  };
+
   for (let r = 0; r < gridSize; r++) {
     for (let c = 0; c < gridSize; c++) {
       const doorInset = (roomSize - doorSize) / 2;
       if (c !== gridSize - 1) {
         const doorName = getRightDoorName(r, c);
-        const doorPercent = doorPercentMap?.get(doorName);
-        const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
-        const doorPercentString =
-          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
         const doorBounds = getRightDoorBounds(r, c, size);
         const updatedDoorBounds = {
           ...doorBounds,
           top: doorBounds.top + doorInset,
           bottom: doorBounds.bottom - doorInset,
         };
+        const doorPercent = doorPercentMap?.get(doorName);
         cells.push(
           <Cell
             key={doorName}
-            name={
-              doorPercentRounded === 0 || doorPercentRounded === 100 ? undefined : doorPercentString
-            }
+            name={getPercentString(doorPercent)}
             bounds={updatedDoorBounds}
             color={getColor(openDoors, closedDoors, doorName, doorPercent)}
             strokeWidth={getStrokeWidth(size)}
@@ -83,25 +83,19 @@ function LostTemple({
       }
       if (r !== gridSize - 1 && !isBottomDoorA3B3(r, c)) {
         const doorName = getBottomDoorName(r, c);
-        const doorPercent = doorPercentMap?.get(doorName);
-        const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
-        const doorPercentString =
-          doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
-        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercent);
         const doorBounds = getBottomDoorBounds(r, c, size);
         const updatedDoorBounds = {
           ...doorBounds,
           left: doorBounds.left + (roomSize - doorSize) / 2,
           right: doorBounds.right - (roomSize - doorSize) / 2,
         };
+        const doorPercent = doorPercentMap?.get(doorName);
         cells.push(
           <Cell
             key={doorName}
-            name={
-              doorPercentRounded === 0 || doorPercentRounded === 100 ? undefined : doorPercentString
-            }
+            name={getPercentString(doorPercent)}
             bounds={updatedDoorBounds}
-            color={doorColor}
+            color={getColor(openDoors, closedDoors, doorName, doorPercent)}
             strokeWidth={getStrokeWidth(size)}
             fontSize={doorFontSize}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}

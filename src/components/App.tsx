@@ -6,7 +6,7 @@ import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import { Alert, Button, Snackbar, Typography } from '@mui/material';
 
 import ReactGA from 'react-ga4';
-import { defaultInitialState, initialOpenRooms } from '../scripts/initialState';
+import { defaultInitialState, initialOpenRooms, InitialState } from '../scripts/initialState';
 import {
   copyQueryStringToClipboard,
   decodeQueryString,
@@ -35,7 +35,7 @@ ReactGA.send('pageview');
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 
-const initialState = (function () {
+const initialState = (function (): InitialState {
   const queryString = getQueryString();
   return queryString === null ? defaultInitialState : decodeQueryString(queryString);
 })();
