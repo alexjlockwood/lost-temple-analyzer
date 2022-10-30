@@ -252,9 +252,9 @@ function App() {
           <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
             Reset grid
           </Button>
-          <Button onClick={onGetLinkClick} color="inherit">
+          {/* <Button onClick={onGetLinkClick} color="inherit">
             Copy link
-          </Button>
+          </Button> */}
         </ButtonContainer>
         <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
       </ColumnContainer>
