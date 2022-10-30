@@ -3,40 +3,75 @@ import styled from '@emotion/styled';
 import LostTemple, {
   Bounds,
   getBottomDoorBounds,
-  getBottomDoorName,
   getRightDoorBounds,
-  getRightDoorName,
   getRoomBounds,
+} from './LostTemple';
+import { LostTemplePath } from './LostTemplePath';
+import { lostTemplePaths } from './LostTemplePathData';
+import { Alert, Button, Snackbar, Typography } from '@mui/material';
+
+import ReactGA from 'react-ga4';
+import { defaultInitialState, initialOpenRooms } from './initialState';
+import {
+  copyQueryStringToClipboard,
+  decodeQueryString,
+  encodeQueryString,
+  getQueryString,
+} from './queryString';
+import { areSetsEqual, difference, toggle, union } from './setUtils';
+import {
+  allDoorNames,
+  allRoomNames,
+  getBottomDoorName,
+  getRightDoorName,
   getRoomName,
   gridSize,
   isBottomDoorA3B3,
   isRoomA3,
-} from './LostTemple';
-import { LostTemplePath } from './LostTemplePath';
-import { lostTemplePaths } from './LostTemplePathData';
-import { Button, Typography } from '@mui/material';
+} from './lostTempleUtils';
 
-// TODO: google analytics
+ReactGA.initialize('G-J8W430VTF9');
+ReactGA.send('pageview');
+
 // TODO: set up manifest.json so can be put on home screen on phones
 // TODO: add social media links and thumbnails and favicon stuff
 // TODO: it doesnt work in landscape on phones
+// TODO: have some indication that a path is impossible in the UI if it is chosen
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 
-interface Offset {
-  readonly x: number;
-  readonly y: number;
-}
+const queryString = getQueryString();
+const initialState = queryString === null ? defaultInitialState : decodeQueryString(queryString);
 
 function App() {
-  const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialOpenRooms);
-  const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(new Set());
-  const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(new Set());
-  const [closedDoors, setClosedDoors] = useState<ReadonlySet<string>>(new Set());
+  const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);
+  const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(initialState.closedRooms);
+  const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(initialState.openDoors);
+  const [closedDoors, setClosedDoors] = useState<ReadonlySet<string>>(initialState.closedDoors);
   const [isDragging, setIsDragging] = useState(false);
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
+
+  const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
+  const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
+  const [isErrorSnackbarShown, setErrorSnackbarShown] = useState(false);
+  const onErrorSnackbarClosed = () => setErrorSnackbarShown(false);
+
+  const onGetLinkClick = () => {
+    const queryString = encodeQueryString(openRooms, closedRooms, openDoors, closedDoors);
+    copyQueryStringToClipboard(
+      queryString,
+      () => {
+        setSuccessSnackbarShown(true);
+        setErrorSnackbarShown(false);
+      },
+      () => {
+        setSuccessSnackbarShown(false);
+        setErrorSnackbarShown(true);
+      },
+    );
+  };
 
   const lostTempleRef = useRef<HTMLDivElement>(null);
   const [lostTempleSize, setLostTempleSize] = useState<number | undefined>(undefined);
@@ -66,13 +101,13 @@ function App() {
     .sort((a, b) => b.count - a.count);
 
   const roomPercentMap = createPercentMap(
-    difference(roomNames, union(openRooms, closedRooms)),
+    difference(allRoomNames, union(openRooms, closedRooms)),
     filteredLostTemplePaths,
     (roomName, path) => getOpenRooms(path).has(roomName),
   );
 
   const doorPercentMap = createPercentMap(
-    difference(doorNames, union(openDoors, closedDoors)),
+    difference(allDoorNames, union(openDoors, closedDoors)),
     filteredLostTemplePaths,
     (doorName, path) => path.openDoors.has(doorName),
   );
@@ -204,20 +239,34 @@ function App() {
         onPointerUp={onPointerUp}
       />
     );
+
   return (
     <AppContainer>
       <ColumnContainer>
-        {/* <Typography align="center" variant="h3">
-          Lost Temple Analyzer
-        </Typography> */}
         <Typography align="center" variant="subtitle1">
           Click or drag the Lost Temple below to view the door probabilities of different paths.
         </Typography>
-        <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
-          Reset grid
-        </Button>
+        <ButtonContainer>
+          <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
+            Reset grid
+          </Button>
+          <Button onClick={onGetLinkClick} color="inherit">
+            Copy link
+          </Button>
+        </ButtonContainer>
         <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
       </ColumnContainer>
+      <Snackbar
+        open={isSuccessSnackbarShown}
+        autoHideDuration={6000}
+        onClose={onSuccessSnackbarClosed}
+        message="Link copied to clipboard"
+      />
+      <Snackbar open={isErrorSnackbarShown} autoHideDuration={6000} onClose={onErrorSnackbarClosed}>
+        <Alert onClose={onErrorSnackbarClosed} severity="success">
+          Unable to copy link to clipboard
+        </Alert>
+      </Snackbar>
     </AppContainer>
   );
 }
@@ -237,16 +286,18 @@ const ColumnContainer = styled.div`
   gap: 8px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+`;
+
 const LostTempleContainer = styled.div`
   display: grid;
   place-items: center;
   width: 100%;
   flex-grow: 1;
 `;
-
-function areSetsEqual(set1: ReadonlySet<string>, set2: ReadonlySet<string>): boolean {
-  return set1.size === set2.size && Array.from(set1).every((s) => set2.has(s));
-}
 
 function intersects(
   bounds: Bounds,
@@ -309,83 +360,13 @@ function createPercentMap(
   return map;
 }
 
-function union(setA: ReadonlySet<string>, setB: ReadonlySet<string>) {
-  const _union = new Set(setA);
-  setB.forEach((elem) => _union.add(elem));
-  return _union;
-}
-
-function difference(setA: ReadonlySet<string>, setB: ReadonlySet<string>) {
-  const _difference = new Set(setA);
-  setB.forEach((elem) => _difference.delete(elem));
-  return _difference;
-}
-
-function toggle(open: Set<string>, closed: Set<string>, name: string) {
-  if (open.has(name)) {
-    open.delete(name);
-    closed.add(name);
-  } else if (closed.has(name)) {
-    closed.delete(name);
-  } else {
-    open.add(name);
-  }
-}
-
 export function getOpenRooms(path: LostTemplePath): ReadonlySet<string> {
   return new Set(Array.from(path.openDoors).flatMap((door) => door.split(',')));
 }
 
-const initialOpenRooms: ReadonlySet<string> = new Set(['A3']);
-
-const roomNames = new Set(
-  ['A', 'B', 'C', 'D', 'E'].flatMap((rowLetter) =>
-    Array.from({ length: gridSize }, (_, i) => i + 1).map(
-      (colNumber) => `${rowLetter}${colNumber}`,
-    ),
-  ),
-);
-
-const doorNames = new Set([
-  'D1,E1',
-  'C1,D1',
-  'B1,C1',
-  'A1,B1',
-  'D2,E2',
-  'C2,D2',
-  'B2,C2',
-  'A2,B2',
-  'D3,E3',
-  'C3,D3',
-  'B3,C3',
-  'D4,E4',
-  'C4,D4',
-  'B4,C4',
-  'A4,B4',
-  'D5,E5',
-  'C5,D5',
-  'B5,C5',
-  'A5,B5',
-  'E1,E2',
-  'E2,E3',
-  'E3,E4',
-  'E4,E5',
-  'D1,D2',
-  'D2,D3',
-  'D3,D4',
-  'D4,D5',
-  'C1,C2',
-  'C2,C3',
-  'C3,C4',
-  'C4,C5',
-  'B1,B2',
-  'B2,B3',
-  'B3,B4',
-  'B4,B5',
-  'A1,A2',
-  'A2,A3',
-  'A3,A4',
-  'A4,A5',
-]);
+interface Offset {
+  readonly x: number;
+  readonly y: number;
+}
 
 export default App;

@@ -1,14 +1,17 @@
 import React from 'react';
 import Cell from './Cell';
 import styled from '@emotion/styled';
+import {
+  getBottomDoorName,
+  getRightDoorName,
+  getRoomName,
+  gridSize,
+  isBottomDoorA3B3,
+  isRoomA3,
+} from './lostTempleUtils';
 
 const roomSizeFactor = 0.7;
 const doorSizeFactor = 1 - roomSizeFactor;
-export const gridSize = 5;
-
-export const roomNames = ['E', 'D', 'C', 'B', 'A'].map((rowLetter) =>
-  Array.from({ length: gridSize }, (_, i) => i + 1).map((colNumber) => `${rowLetter}${colNumber}`),
-);
 
 interface LostTempleProps {
   readonly size: number;
@@ -46,37 +49,25 @@ function LostTemple({
   const roomFontSize = getRoomFontSize(size);
   const doorFontSize = getDoorFontSize(size);
 
-  const cells = roomNames.flatMap((row, r) => {
-    return row.flatMap((_, c) => {
-      const roomName = getRoomName(r, c);
-      const roomPercent = roomPercentMap?.get(roomName);
-      const roomPercentRounded = roomPercent === undefined ? undefined : Math.round(roomPercent);
-      const roomColor = getColor(openRooms, closedRooms, roomName, roomPercentRounded);
-      const rowCells = [
-        <Cell
-          key={roomName}
-          name={showRoomNames ? roomName : undefined}
-          bounds={getRoomBounds(size, r, c)}
-          color={roomColor}
-          strokeWidth={getStrokeWidth(size)}
-          fontSize={roomFontSize}
-          onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
-        />,
-      ];
+  // TODO: sort these so that doors are at the bottom of z-index? some glitches otherwise...
+  const cells: JSX.Element[] = [];
+
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
       if (c !== gridSize - 1) {
         const doorName = getRightDoorName(r, c);
         const doorPercent = doorPercentMap?.get(doorName);
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
-        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
+        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercent);
         const doorBounds = getRightDoorBounds(size, r, c);
         const updatedDoorBounds = {
           ...doorBounds,
           top: doorBounds.top + (roomSize - doorSize) / 2,
           bottom: doorBounds.bottom - (roomSize - doorSize) / 2,
         };
-        rowCells.push(
+        cells.push(
           <Cell
             key={doorName}
             name={
@@ -96,14 +87,14 @@ function LostTemple({
         const doorPercentRounded = doorPercent === undefined ? undefined : Math.round(doorPercent);
         const doorPercentString =
           doorPercentRounded === undefined ? undefined : `${doorPercentRounded}%`;
-        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercentRounded);
+        const doorColor = getColor(openDoors, closedDoors, doorName, doorPercent);
         const doorBounds = getBottomDoorBounds(size, r, c);
         const updatedDoorBounds = {
           ...doorBounds,
           left: doorBounds.left + (roomSize - doorSize) / 2,
           right: doorBounds.right - (roomSize - doorSize) / 2,
         };
-        rowCells.push(
+        cells.push(
           <Cell
             key={doorName}
             name={
@@ -117,9 +108,28 @@ function LostTemple({
           />,
         );
       }
-      return rowCells;
-    });
-  });
+    }
+  }
+
+  // Place the rooms after the doors.
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
+      const roomName = getRoomName(r, c);
+      const roomPercent = roomPercentMap?.get(roomName);
+      const roomColor = getColor(openRooms, closedRooms, roomName, roomPercent);
+      cells.push(
+        <Cell
+          key={roomName}
+          name={showRoomNames ? roomName : undefined}
+          bounds={getRoomBounds(size, r, c)}
+          color={roomColor}
+          strokeWidth={getStrokeWidth(size)}
+          fontSize={roomFontSize}
+          onClick={!isRoomA3(r, c) && onRoomClick ? () => onRoomClick(roomName) : undefined}
+        />,
+      );
+    }
+  }
   return (
     <Container
       onPointerDown={onPointerDown}
@@ -204,6 +214,13 @@ export function getBottomDoorBounds(size: number, r: number, c: number): Bounds 
   };
 }
 
+export interface Bounds {
+  readonly left: number;
+  readonly top: number;
+  readonly right: number;
+  readonly bottom: number;
+}
+
 function getRoomFontSize(size: number): number {
   if (size <= 400) {
     return 14;
@@ -216,7 +233,7 @@ function getRoomFontSize(size: number): number {
 
 function getDoorFontSize(size: number): number {
   if (size <= 400) {
-    return 8;
+    return 10;
   } else if (size <= 600) {
     return 12;
   } else {
@@ -238,33 +255,6 @@ function getRoomSize(size: number) {
 
 function getDoorSize(size: number) {
   return (getSizePlusStrokes(size) * doorSizeFactor) / (gridSize - 1);
-}
-
-export function getRoomName(r: number, c: number): string {
-  return roomNames[r][c];
-}
-
-export function getRightDoorName(r: number, c: number): string {
-  return [getRoomName(r, c), roomNames[r][c + 1]].sort().join(',');
-}
-
-export function getBottomDoorName(r: number, c: number): string {
-  return [getRoomName(r, c), roomNames[r + 1][c]].sort().join(',');
-}
-
-export function isRoomA3(r: number, c: number): boolean {
-  return getRoomName(r, c) === 'A3';
-}
-
-export function isBottomDoorA3B3(r: number, c: number): boolean {
-  return getBottomDoorName(r, c) === 'A3,B3';
-}
-
-export interface Bounds {
-  readonly left: number;
-  readonly top: number;
-  readonly right: number;
-  readonly bottom: number;
 }
 
 export default LostTemple;
