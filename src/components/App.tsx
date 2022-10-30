@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import { Alert, Button, Snackbar, Typography } from '@mui/material';
+import useResizeObserver from '@react-hook/resize-observer';
 
 import ReactGA from 'react-ga4';
 import { defaultInitialState, initialOpenRooms, InitialState } from '../scripts/initialState';
@@ -40,6 +41,13 @@ const initialState = (function (): InitialState {
   return queryString === null ? defaultInitialState : decodeQueryString(queryString);
 })();
 
+function useSize(target: React.RefObject<HTMLDivElement>) {
+  const [size, setSize] = React.useState<DOMRect | undefined>(undefined);
+  useLayoutEffect(() => setSize(target?.current?.getBoundingClientRect()), [target]);
+  useResizeObserver(target, (entry) => setSize(entry.contentRect));
+  return size;
+}
+
 function App() {
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);
   const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(initialState.closedRooms);
@@ -48,6 +56,24 @@ function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
+
+  const columnContainerRef = useRef<HTMLDivElement>(null);
+  const columnContainerRect = useSize(columnContainerRef);
+  const headerContainerRef = useRef<HTMLDivElement>(null);
+  const headerContainerRect = useSize(headerContainerRef);
+
+  const availableWidth = columnContainerRect?.width;
+  const availableHeight = columnContainerRect?.height;
+  const headerContainerHeight = headerContainerRect?.height;
+  const lostTempleSize =
+    availableWidth === undefined ||
+    availableHeight === undefined ||
+    headerContainerHeight === undefined
+      ? undefined
+      : Math.min(
+          maxLostTempleSize,
+          Math.min(availableWidth, availableHeight - headerContainerHeight + 8 + 8),
+        );
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
@@ -68,20 +94,6 @@ function App() {
       },
     );
   };
-
-  const lostTempleRef = useRef<HTMLDivElement>(null);
-  const [lostTempleSize, setLostTempleSize] = useState<number | undefined>(undefined);
-  const updateLostTempleSize = () => {
-    const width = lostTempleRef?.current?.clientWidth;
-    const height = lostTempleRef?.current?.clientHeight;
-    const size =
-      width === undefined || height === undefined
-        ? undefined
-        : Math.min(maxLostTempleSize, Math.min(width, height));
-    setLostTempleSize(size);
-  };
-  useEffect(updateLostTempleSize, []);
-  useEffect(() => window.addEventListener('resize', updateLostTempleSize), []);
 
   const filteredLostTemplePaths = lostTemplePaths
     .filter((path) => {
@@ -164,26 +176,25 @@ function App() {
       const offsetY = event.clientY - rect.top;
       const prevX = lastPointerOffset.x;
       const prevY = lastPointerOffset.y;
+      const size = lostTempleSize;
 
       for (let r = 0; r < gridSize; r++) {
         for (let c = 0; c < gridSize; c++) {
           if (
             !isRoomA3(r, c) &&
-            intersects(getRoomBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
+            intersects(getRoomBounds(r, c, size), offsetX, offsetY, prevX, prevY)
           ) {
             selectRoom(getRoomName(r, c));
           }
           if (c !== gridSize - 1) {
-            if (
-              intersects(getRightDoorBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
-            ) {
+            if (intersects(getRightDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)) {
               selectDoor(getRightDoorName(r, c));
             }
           }
           if (r !== gridSize - 1) {
             if (
               !isBottomDoorA3B3(r, c) &&
-              intersects(getBottomDoorBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
+              intersects(getBottomDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)
             ) {
               selectDoor(getBottomDoorName(r, c));
             }
@@ -238,19 +249,21 @@ function App() {
 
   return (
     <AppContainer>
-      <ColumnContainer>
-        <Typography align="center" variant="subtitle1">
-          Click or drag the Lost Temple below to view the door probabilities of different paths.
-        </Typography>
-        <ButtonContainer>
-          <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
-            Reset grid
-          </Button>
-          <Button onClick={onGetLinkClick} color="inherit">
-            Copy link
-          </Button>
-        </ButtonContainer>
-        <LostTempleContainer ref={lostTempleRef}>{lostTemple}</LostTempleContainer>
+      <ColumnContainer ref={columnContainerRef}>
+        <HeaderContainer ref={headerContainerRef}>
+          <Typography align="center" variant="subtitle1">
+            Click or drag the Lost Temple below to view the door probabilities of different paths.
+          </Typography>
+          <ButtonContainer>
+            <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
+              Reset grid
+            </Button>
+            <Button onClick={onGetLinkClick} color="inherit">
+              Copy link
+            </Button>
+          </ButtonContainer>
+        </HeaderContainer>
+        <LostTempleContainer>{lostTemple}</LostTempleContainer>
       </ColumnContainer>
       <Snackbar
         open={isSuccessSnackbarShown}
@@ -278,6 +291,14 @@ const ColumnContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 8px;
 `;
@@ -291,8 +312,6 @@ const ButtonContainer = styled.div`
 const LostTempleContainer = styled.div`
   display: grid;
   place-items: center;
-  width: 100%;
-  flex-grow: 1;
 `;
 
 function createPercentMap(
