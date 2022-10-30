@@ -1,9 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import '../i18n/config';
+import { useTranslation } from 'react-i18next';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
-import { Alert, Button, Paper, Snackbar, Typography } from '@mui/material';
+import { Alert, Button, Snackbar, Typography } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
 
 import ReactGA from 'react-ga4';
@@ -34,6 +36,7 @@ ReactGA.send('pageview');
 // TODO: have some indication that a path is impossible in the UI if it is chosen
 // TODO: add service worker eventually so can be put on home screen on phone
 // TODO: show the link in the snackbar if it fails?
+// TODO: add discord link, link to twitter, about section
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
@@ -51,6 +54,8 @@ function useSize(target: React.RefObject<HTMLDivElement>) {
 }
 
 function App() {
+  const { t, i18n } = useTranslation();
+
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);
   const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(initialState.closedRooms);
   const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(initialState.openDoors);
@@ -260,14 +265,14 @@ function App() {
         <ColumnContainer ref={columnContainerRef}>
           <HeaderContainer ref={headerContainerRef}>
             <Typography align="center" variant="subtitle1">
-              Click or drag the Lost Temple below to view the door probabilities of different paths.
+              {t('description')}
             </Typography>
             <ButtonContainer>
               <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
-                Reset grid
+                {t('resetGridButton')}
               </Button>
               <Button onClick={onGetLinkClick} color="inherit">
-                Copy link
+                {t('copyLinkButton')}
               </Button>
             </ButtonContainer>
           </HeaderContainer>
