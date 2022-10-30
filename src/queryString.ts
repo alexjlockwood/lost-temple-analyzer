@@ -61,7 +61,7 @@ export function decodeQueryString(queryString: string): InitialState {
     return '0'.repeat(32 - binary.length) + binary;
   });
   const decodedOpen = decodedBinaryNums[0].concat(decodedBinaryNums[1]);
-  const decodedClosed = decodedBinaryNums[3].concat(decodedBinaryNums[4]);
+  const decodedClosed = decodedBinaryNums[2].concat(decodedBinaryNums[3]);
 
   const openRooms = new Set<string>(initialOpenRooms);
   const closedRooms = new Set<string>();
