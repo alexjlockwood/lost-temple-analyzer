@@ -6,19 +6,19 @@ import LostTemple, {
   getRightDoorBounds,
   getRoomBounds,
 } from './LostTemple';
-import { LostTemplePath } from './LostTemplePath';
-import { lostTemplePaths } from './LostTemplePathData';
+import { LostTemplePath } from '../scripts/lostTemplePath';
+import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import { Alert, Button, Snackbar, Typography } from '@mui/material';
 
 import ReactGA from 'react-ga4';
-import { defaultInitialState, initialOpenRooms } from './initialState';
+import { defaultInitialState, initialOpenRooms } from '../scripts/initialState';
 import {
   copyQueryStringToClipboard,
   decodeQueryString,
   encodeQueryString,
   getQueryString,
-} from './queryString';
-import { areSetsEqual, difference, toggle, union } from './setUtils';
+} from '../scripts/queryStringUtils';
+import { areSetsEqual, difference, toggle, union } from '../scripts/setUtils';
 import {
   allDoorNames,
   allRoomNames,
@@ -28,15 +28,14 @@ import {
   gridSize,
   isBottomDoorA3B3,
   isRoomA3,
-} from './lostTempleUtils';
+} from '../scripts/lostTempleUtils';
 
 ReactGA.initialize('G-J8W430VTF9');
 ReactGA.send('pageview');
 
-// TODO: set up manifest.json so can be put on home screen on phones
-// TODO: add social media links and thumbnails and favicon stuff
 // TODO: it doesnt work in landscape on phones
 // TODO: have some indication that a path is impossible in the UI if it is chosen
+// TODO: add service worker eventually so can be put on home screen on phone
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;

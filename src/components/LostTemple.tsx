@@ -8,7 +8,7 @@ import {
   gridSize,
   isBottomDoorA3B3,
   isRoomA3,
-} from './lostTempleUtils';
+} from '../scripts/lostTempleUtils';
 
 const roomSizeFactor = 0.7;
 const doorSizeFactor = 1 - roomSizeFactor;

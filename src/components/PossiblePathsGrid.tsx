@@ -1,5 +1,5 @@
 import React from 'react';
-import { LostTemplePath } from './LostTemplePath';
+import { LostTemplePath } from '../scripts/lostTemplePath';
 import LostTemple from './LostTemple';
 import { getOpenRooms } from './App';
 import styled from '@emotion/styled';
