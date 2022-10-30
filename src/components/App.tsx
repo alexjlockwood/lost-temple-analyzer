@@ -167,6 +167,11 @@ function App() {
     setClosedDoors(updatedClosedDoors);
   };
 
+  const resetDragState = () => {
+    setPointerId(undefined);
+    setIsDragging(false);
+    setLastPointerOffset(undefined);
+  };
   const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (event) => {
     if (pointerId !== undefined) {
       return;
@@ -179,6 +184,10 @@ function App() {
     setLastPointerOffset({ x: offsetX, y: offsetY });
   };
   const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
+    if (event.buttons === 0) {
+      resetDragState();
+      return;
+    }
     if (pointerId !== event.pointerId || lostTempleSize === undefined) {
       return;
     }
@@ -221,9 +230,7 @@ function App() {
     if (pointerId !== event.pointerId) {
       return;
     }
-    setPointerId(undefined);
-    setIsDragging(false);
-    setLastPointerOffset(undefined);
+    resetDragState();
   };
 
   const resetDisabled =
