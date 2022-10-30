@@ -298,11 +298,11 @@ function App() {
         open={isSuccessSnackbarShown}
         autoHideDuration={6000}
         onClose={onSuccessSnackbarClosed}
-        message="Link copied to clipboard"
+        message={t('copyLinkToClipboardSuccess')}
       />
       <Snackbar open={isErrorSnackbarShown} autoHideDuration={6000} onClose={onErrorSnackbarClosed}>
         <Alert onClose={onErrorSnackbarClosed} severity="error">
-          Unable to copy link to clipboard
+          {t('copyLinkToClipboardError')}
         </Alert>
       </Snackbar>
     </AppContainer>
