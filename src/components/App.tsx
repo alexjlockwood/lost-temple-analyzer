@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
-import LostTemple, {
-  Bounds,
-  getBottomDoorBounds,
-  getRightDoorBounds,
-  getRoomBounds,
-} from './LostTemple';
-import { LostTemplePath } from '../scripts/lostTemplePath';
+import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
+import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import { Alert, Button, Snackbar, Typography } from '@mui/material';
 
@@ -18,7 +13,7 @@ import {
   encodeQueryString,
   getQueryString,
 } from '../scripts/queryStringUtils';
-import { areSetsEqual, difference, toggle, union } from '../scripts/setUtils';
+import { areSetsEqual, difference, intersects, toggle, union } from '../scripts/mathUtils';
 import {
   allDoorNames,
   allRoomNames,
@@ -174,13 +169,13 @@ function App() {
         for (let c = 0; c < gridSize; c++) {
           if (
             !isRoomA3(r, c) &&
-            intersects(getRoomBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
+            intersects(getRoomBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
           ) {
             selectRoom(getRoomName(r, c));
           }
           if (c !== gridSize - 1) {
             if (
-              intersects(getRightDoorBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
+              intersects(getRightDoorBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
             ) {
               selectDoor(getRightDoorName(r, c));
             }
@@ -188,7 +183,7 @@ function App() {
           if (r !== gridSize - 1) {
             if (
               !isBottomDoorA3B3(r, c) &&
-              intersects(getBottomDoorBounds(lostTempleSize, r, c), offsetX, offsetY, prevX, prevY)
+              intersects(getBottomDoorBounds(r, c, lostTempleSize), offsetX, offsetY, prevX, prevY)
             ) {
               selectDoor(getBottomDoorName(r, c));
             }
@@ -300,47 +295,6 @@ const LostTempleContainer = styled.div`
   flex-grow: 1;
 `;
 
-function intersects(
-  bounds: Bounds,
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number,
-): boolean {
-  const x1 = startX;
-  const y1 = startY;
-  const x2 = endX;
-  const y2 = endY;
-  const rx = bounds.left;
-  const ry = bounds.top;
-  const rw = bounds.right - bounds.left;
-  const rh = bounds.bottom - bounds.top;
-  const left = lineLine(x1, y1, x2, y2, rx, ry, rx, ry + rh);
-  const right = lineLine(x1, y1, x2, y2, rx + rw, ry, rx + rw, ry + rh);
-  const top = lineLine(x1, y1, x2, y2, rx, ry, rx + rw, ry);
-  const bottom = lineLine(x1, y1, x2, y2, rx, ry + rh, rx + rw, ry + rh);
-  return left || right || top || bottom;
-}
-
-function lineLine(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  x3: number,
-  y3: number,
-  x4: number,
-  y4: number,
-): boolean {
-  const uA =
-    ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) /
-    ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-  const uB =
-    ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) /
-    ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1));
-  return 0 <= uA && uA <= 1 && 0 <= uB && uB <= 1;
-}
-
 function createPercentMap(
   names: ReadonlySet<string>,
   paths: readonly LostTemplePath[],
@@ -359,10 +313,6 @@ function createPercentMap(
     }
   });
   return map;
-}
-
-export function getOpenRooms(path: LostTemplePath): ReadonlySet<string> {
-  return new Set(Array.from(path.openDoors).flatMap((door) => door.split(',')));
 }
 
 interface Offset {

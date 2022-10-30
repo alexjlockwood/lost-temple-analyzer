@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Bounds } from './LostTemple';
 import { Typography } from '@mui/material';
+import isEqual from 'react-fast-compare';
+import { Bounds } from '../scripts/bounds';
 
 interface Props {
   readonly name?: string;
@@ -38,4 +39,4 @@ const Square = styled.div<{
   height: ${(props) => props.bounds.bottom - props.bounds.top}px;
 `;
 
-export default Cell;
+export default React.memo(Cell, isEqual);
