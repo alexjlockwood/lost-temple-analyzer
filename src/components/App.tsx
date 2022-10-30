@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
-import { Alert, Button, Snackbar, Typography } from '@mui/material';
+import { Alert, Button, Paper, Snackbar, Typography } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
 
 import ReactGA from 'react-ga4';
@@ -25,6 +25,7 @@ import {
   isBottomDoorA3B3,
   isRoomA3,
 } from '../scripts/lostTempleUtils';
+import PossiblePathsPanel from './PossiblePathsPanel';
 
 ReactGA.initialize('G-J8W430VTF9');
 ReactGA.send('pageview');
@@ -32,6 +33,7 @@ ReactGA.send('pageview');
 // TODO: it doesnt work in landscape on phones
 // TODO: have some indication that a path is impossible in the UI if it is chosen
 // TODO: add service worker eventually so can be put on home screen on phone
+// TODO: show the link in the snackbar if it fails?
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
@@ -74,6 +76,9 @@ function App() {
           maxLostTempleSize,
           Math.min(availableWidth, availableHeight - headerContainerHeight + 8 + 8),
         );
+
+  // TODO: make this dynamic based on screen size
+  const panelWidth = 300;
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
@@ -249,22 +254,25 @@ function App() {
 
   return (
     <AppContainer>
-      <ColumnContainer ref={columnContainerRef}>
-        <HeaderContainer ref={headerContainerRef}>
-          <Typography align="center" variant="subtitle1">
-            Click or drag the Lost Temple below to view the door probabilities of different paths.
-          </Typography>
-          <ButtonContainer>
-            <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
-              Reset grid
-            </Button>
-            <Button onClick={onGetLinkClick} color="inherit">
-              Copy link
-            </Button>
-          </ButtonContainer>
-        </HeaderContainer>
-        <LostTempleContainer>{lostTemple}</LostTempleContainer>
-      </ColumnContainer>
+      <RowContainer>
+        <ColumnContainer ref={columnContainerRef}>
+          <HeaderContainer ref={headerContainerRef}>
+            <Typography align="center" variant="subtitle1">
+              Click or drag the Lost Temple below to view the door probabilities of different paths.
+            </Typography>
+            <ButtonContainer>
+              <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
+                Reset grid
+              </Button>
+              <Button onClick={onGetLinkClick} color="inherit">
+                Copy link
+              </Button>
+            </ButtonContainer>
+          </HeaderContainer>
+          <LostTempleContainer>{lostTemple}</LostTempleContainer>
+        </ColumnContainer>
+        <PossiblePathsPanel width={panelWidth} possiblePaths={filteredLostTemplePaths} />
+      </RowContainer>
       <Snackbar
         open={isSuccessSnackbarShown}
         autoHideDuration={6000}
@@ -272,7 +280,7 @@ function App() {
         message="Link copied to clipboard"
       />
       <Snackbar open={isErrorSnackbarShown} autoHideDuration={6000} onClose={onErrorSnackbarClosed}>
-        <Alert onClose={onErrorSnackbarClosed} severity="success">
+        <Alert onClose={onErrorSnackbarClosed} severity="error">
           Unable to copy link to clipboard
         </Alert>
       </Snackbar>
@@ -282,8 +290,13 @@ function App() {
 
 const AppContainer = styled.div`
   height: 100vh;
-  padding: 16px;
-  box-sizing: border-box;
+`;
+
+const RowContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
 `;
 
 const ColumnContainer = styled.div`
@@ -294,6 +307,8 @@ const ColumnContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  padding: 16px;
+  box-sizing: border-box;
 `;
 
 const HeaderContainer = styled.div`
