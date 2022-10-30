@@ -41,8 +41,10 @@ ReactGA.send('pageview');
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 
-const queryString = getQueryString();
-const initialState = queryString === null ? defaultInitialState : decodeQueryString(queryString);
+const initialState = (function () {
+  const queryString = getQueryString();
+  return queryString === null ? defaultInitialState : decodeQueryString(queryString);
+})();
 
 function App() {
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);

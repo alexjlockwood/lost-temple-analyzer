@@ -111,7 +111,9 @@ export function copyQueryStringToClipboard(
   onSuccess: () => void,
   onError: () => void,
 ) {
-  const copiedUrl = `${window.location.host}?${queryParam}=${queryString}`;
+  const host = window.location.host.replaceAll('/', '');
+  const pathname = window.location.pathname.replaceAll('/', '');
+  const copiedUrl = `${host}/${pathname}?${queryParam}=${queryString}`;
   navigator.clipboard.writeText(copiedUrl).then(onSuccess, onError);
 }
 
