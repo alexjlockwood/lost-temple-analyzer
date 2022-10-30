@@ -37,6 +37,7 @@ ReactGA.send('pageview');
 // TODO: add service worker eventually so can be put on home screen on phone
 // TODO: show the link in the snackbar if it fails?
 // TODO: add discord link, link to twitter, about section
+// TODO: handle onPointerCancel?
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
@@ -54,7 +55,7 @@ function useSize(target: React.RefObject<HTMLDivElement>) {
 }
 
 function App() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);
   const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(initialState.closedRooms);

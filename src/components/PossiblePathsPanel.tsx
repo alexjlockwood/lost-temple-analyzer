@@ -49,7 +49,7 @@ const sidePanelPadding = 16;
 const gridPadding = 40;
 
 const SidePanel = styled(Paper)<{ readonly width: number }>`
-  width: ${(props) => props.width}px;
+  width: ${({ width }) => width}px;
   height: 100vh;
   padding: ${sidePanelPadding}px;
   box-sizing: border-box;
@@ -68,7 +68,7 @@ const GridContainer = styled.div<{
 }>`
   width: 100%;
   display: grid;
-  grid-template-columns: ${({ columnWidth, numColumns }) => toCss(columnWidth, numColumns)};
+  grid-template-columns: ${({ columnWidth, numColumns }) => toCssValue(columnWidth, numColumns)};
   grid-gap: ${gridPadding}px;
 `;
 
@@ -80,7 +80,7 @@ const ItemContainer = styled.div`
   gap: 8px;
 `;
 
-function toCss(columnWidth: number, numColumns: number) {
+function toCssValue(columnWidth: number, numColumns: number) {
   return Array(numColumns)
     .fill(columnWidth)
     .map((c) => `${c}px`)
