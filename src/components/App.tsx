@@ -41,6 +41,13 @@ ReactGA.send('pageview');
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
+const columnContainerMargin = 16;
+const verticalGapSpacing = 8;
+
+// TODO: make this dynamic based on screen size
+const panelWidth = 600;
+const panelNumColumns = 2;
+const isPanelVisible = false;
 
 const initialState = (function (): InitialState {
   const queryString = getQueryString();
@@ -80,13 +87,11 @@ function App() {
       ? undefined
       : Math.min(
           maxLostTempleSize,
-          Math.min(availableWidth, availableHeight - headerContainerHeight + 8 + 8),
+          Math.min(
+            availableWidth,
+            availableHeight - headerContainerHeight + verticalGapSpacing * 2,
+          ),
         );
-
-  // TODO: make this dynamic based on screen size
-  const panelWidth = 600;
-  const panelNumColumns = 2;
-  const isPanelVisible = false;
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
@@ -327,16 +332,15 @@ const ColumnContainer = styled.div`
   flex-grow: 1;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  padding: 16px;
-  box-sizing: border-box;
+  gap: ${verticalGapSpacing}px;
+  margin: ${columnContainerMargin}px;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: ${verticalGapSpacing}px;
 `;
 
 const ButtonContainer = styled.div`
