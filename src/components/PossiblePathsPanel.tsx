@@ -1,5 +1,5 @@
 import React from 'react';
-import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
+import { LostTemplePath } from '../scripts/lostTemplePath';
 import LostTemple from './LostTemple';
 import styled from '@emotion/styled';
 import { Paper, Typography } from '@mui/material';
@@ -20,7 +20,7 @@ function PossiblePathsPanel({ width, numColumns, possiblePaths }: PossiblePathsP
       <ItemContainer key={key}>
         <LostTemple
           size={columnWidth}
-          openRooms={getOpenRooms(p)}
+          openRooms={p.openRooms}
           openDoors={p.openDoors}
           showRoomNames={false}
         />

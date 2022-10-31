@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
-import { getOpenRooms, LostTemplePath } from '../scripts/lostTemplePath';
+import { LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import { Alert, Button, Snackbar, Typography } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
@@ -54,6 +54,11 @@ function useSize(target: React.RefObject<HTMLDivElement>) {
   return size;
 }
 
+// TODO: make this dynamic based on screen size
+const panelWidth = 600;
+const panelNumColumns = 2;
+const isPanelVisible = false;
+
 function App() {
   const { t } = useTranslation();
 
@@ -83,11 +88,6 @@ function App() {
           Math.min(availableWidth, availableHeight - headerContainerHeight + 8 + 8),
         );
 
-  // TODO: make this dynamic based on screen size
-  const panelWidth = 600;
-  const panelNumColumns = 2;
-  const isPanelVisible = false;
-
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
   const [isErrorSnackbarShown, setErrorSnackbarShown] = useState(false);
@@ -111,7 +111,7 @@ function App() {
   const filteredLostTemplePaths = lostTemplePaths
     .filter((path) => {
       const pathOpenDoors = path.openDoors;
-      const pathOpenRooms = getOpenRooms(path);
+      const pathOpenRooms = path.openRooms;
       return (
         Array.from(openDoors).every((door) => pathOpenDoors.has(door)) &&
         Array.from(openRooms).every((room) => pathOpenRooms.has(room)) &&
@@ -124,7 +124,7 @@ function App() {
   const roomPercentMap = createPercentMap(
     difference(allRoomNames, union(openRooms, closedRooms)),
     filteredLostTemplePaths,
-    (roomName, path) => getOpenRooms(path).has(roomName),
+    (roomName, path) => path.openRooms.has(roomName),
   );
 
   const doorPercentMap = createPercentMap(
@@ -233,7 +233,7 @@ function App() {
     resetDragState();
   };
 
-  const resetDisabled =
+  const isInitialState =
     areSetsEqual(openRooms, initialOpenRooms) &&
     closedRooms.size === 0 &&
     openDoors.size === 0 &&
@@ -276,10 +276,10 @@ function App() {
               {t('description')}
             </Typography>
             <ButtonContainer>
-              <Button disabled={resetDisabled} onClick={onResetClick} color="inherit">
+              <Button disabled={isInitialState} onClick={onResetClick} color="inherit">
                 {t('resetGridButton')}
               </Button>
-              <Button onClick={onGetLinkClick} color="inherit">
+              <Button disabled={isInitialState} onClick={onGetLinkClick} color="inherit">
                 {t('copyLinkButton')}
               </Button>
             </ButtonContainer>
