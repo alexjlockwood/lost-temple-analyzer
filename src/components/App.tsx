@@ -42,7 +42,6 @@ ReactGA.send('pageview');
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 const columnContainerMargin = 16;
-const verticalGapSpacing = 8;
 
 // TODO: make this dynamic based on screen size
 const panelWidth = 600;
