@@ -40,11 +40,14 @@ ReactGA.send('pageview');
 // TODO: handle onPointerCancel?
 // TODO: figure out why the main screen doesn't look centered
 
+// TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
 const columnContainerMargin = 16;
 
+// TODO: make this dynamic based on screen size
+const panelWidth = 720;
 const panelNumColumns = 3;
-const isPanelVisible = true;
+const isPanelVisible = false;
 
 const initialState = (function (): InitialState {
   const queryString = getQueryString();
@@ -287,6 +290,7 @@ function App() {
         </ColumnContainer>
         {isPanelVisible ? (
           <PossiblePathsPanel
+            width={panelWidth}
             numColumns={panelNumColumns}
             possiblePaths={filteredLostTemplePaths}
           />
