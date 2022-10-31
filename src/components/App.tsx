@@ -54,11 +54,6 @@ function useSize(target: React.RefObject<HTMLDivElement>) {
   return size;
 }
 
-// TODO: make this dynamic based on screen size
-const panelWidth = 600;
-const panelNumColumns = 2;
-const isPanelVisible = false;
-
 function App() {
   const { t } = useTranslation();
 
@@ -87,6 +82,11 @@ function App() {
           maxLostTempleSize,
           Math.min(availableWidth, availableHeight - headerContainerHeight + 8 + 8),
         );
+
+  // TODO: make this dynamic based on screen size
+  const panelWidth = 600;
+  const panelNumColumns = 2;
+  const isPanelVisible = false;
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
