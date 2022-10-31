@@ -186,11 +186,10 @@ function App() {
     setLastPointerOffset({ x: offsetX, y: offsetY });
   };
   const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (event) => {
-    // TODO: figure out why this works on pc but not on mobile?
-    // if (event.buttons === 0 && event.type === '') {
-    //   resetDragState();
-    //   return;
-    // }
+    if (event.buttons === 0) {
+      resetDragState();
+      return;
+    }
     if (pointerId !== event.pointerId || lostTempleSize === undefined) {
       return;
     }
