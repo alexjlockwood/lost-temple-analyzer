@@ -5,5 +5,7 @@ export const zh = {
     copyLinkButton: '拷贝路线链接',
     copyLinkToClipboardSuccess: '已拷贝链接到剪贴板',
     copyLinkToClipboardError: '拷贝链接到剪贴板时出错',
+    possiblePaths_one: '{{count}} 种可能的路线',
+    possiblePaths_other: '{{count}} 种可能的路线',
   },
 };
