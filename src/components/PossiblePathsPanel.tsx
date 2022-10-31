@@ -52,6 +52,8 @@ function PossiblePathsPanel({
   const length = possiblePaths.length;
   const possiblePathKey = length === 1 ? 'possiblePaths_one' : 'possiblePaths_other';
   const possiblePathText = t(possiblePathKey, { count: length });
+
+  // TODO: make this breakpoint shit less hacky/noob :|
   return (
     <SidePanel
       sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block', xl: 'block' } }}
