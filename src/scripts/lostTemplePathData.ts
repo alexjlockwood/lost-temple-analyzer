@@ -1,3 +1,5 @@
+// This file is auto-generated. Do not edit.
+
 import { LostTemplePath } from './lostTemplePath';
 
 export const lostTemplePaths: readonly LostTemplePath[] = [
