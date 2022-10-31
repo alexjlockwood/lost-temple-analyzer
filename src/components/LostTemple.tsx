@@ -86,8 +86,8 @@ function LostTemple({
         const doorBounds = getBottomDoorBounds(r, c, size);
         const updatedDoorBounds = {
           ...doorBounds,
-          left: doorBounds.left + (roomSize - doorSize) / 2,
-          right: doorBounds.right - (roomSize - doorSize) / 2,
+          left: doorBounds.left + doorInset,
+          right: doorBounds.right - doorInset,
         };
         const doorPercent = doorPercentMap?.get(doorName);
         cells.push(
