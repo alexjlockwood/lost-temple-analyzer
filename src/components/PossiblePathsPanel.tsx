@@ -29,12 +29,19 @@ function PossiblePathsPanel({
     (panelWidth - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
   const filteredCount = possiblePaths.reduce((p, c) => p + c.count, 0);
   const lostTemplePaths = possiblePaths.map((p) => {
-    // TODO: use a unique ID (i.e. the index in the raw data list)
-    const key = Array.from(p.openDoors).sort().join('|');
     const knownRooms = intersection(p.openRooms, openRooms);
     const knownDoors = intersection(p.openDoors, openDoors);
+    const percent = p.count / filteredCount;
+    let textPercent: number;
+    if (percent < 0.001) {
+      textPercent = Math.round(percent * 10000) / 100;
+    } else if (percent < 0.0001) {
+      textPercent = Math.round(percent * 100000) / 1000;
+    } else {
+      textPercent = Math.round(percent * 1000) / 10;
+    }
     return (
-      <ItemContainer key={key}>
+      <ItemContainer key={p.key}>
         <LostTemple
           size={columnWidth}
           openRooms={p.openRooms}
@@ -43,8 +50,8 @@ function PossiblePathsPanel({
           knownDoors={knownDoors}
           showRoomNames={false}
         />
-        <Typography variant="body1">
-          {`${p.count} / ${filteredCount} (${Math.round((p.count / filteredCount) * 1000) / 10}%)`}
+        <Typography align="center" variant="body1">
+          {`${p.count} / ${filteredCount} (${textPercent}%)`}
         </Typography>
       </ItemContainer>
     );
@@ -71,7 +78,7 @@ function PossiblePathsPanel({
 }
 
 const sidePanelPadding = 16;
-const gridPadding = 24;
+const gridPadding = 32;
 
 const SidePanel = styled(Paper)<{ readonly width: number }>`
   width: ${({ width }) => width}px;
