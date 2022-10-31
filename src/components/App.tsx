@@ -87,10 +87,7 @@ function App() {
       ? undefined
       : Math.min(
           maxLostTempleSize,
-          Math.min(
-            availableWidth,
-            availableHeight - headerContainerHeight + verticalGapSpacing * 2,
-          ),
+          Math.min(availableWidth, availableHeight - headerContainerHeight),
         );
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
@@ -332,7 +329,6 @@ const ColumnContainer = styled.div`
   flex-grow: 1;
   justify-content: center;
   align-items: center;
-  gap: ${verticalGapSpacing}px;
   margin: ${columnContainerMargin}px;
 `;
 
@@ -340,13 +336,14 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: ${verticalGapSpacing}px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 24px;
 `;
 
 const LostTempleContainer = styled.div`
