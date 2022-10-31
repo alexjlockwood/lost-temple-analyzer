@@ -38,6 +38,7 @@ ReactGA.send('pageview');
 // TODO: show the link in the snackbar if it fails?
 // TODO: add discord link, link to twitter, about section
 // TODO: handle onPointerCancel?
+// TODO: figure out why the main screen doesn't look centered
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 720;
