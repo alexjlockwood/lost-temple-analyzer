@@ -1,12 +1,15 @@
 import { Bounds } from './bounds';
 
-export function union(setA: ReadonlySet<string>, setB: ReadonlySet<string>) {
+export function union(setA: ReadonlySet<string>, setB: ReadonlySet<string>): ReadonlySet<string> {
   const result = new Set(setA);
   setB.forEach((elem) => result.add(elem));
   return result;
 }
 
-export function difference(setA: ReadonlySet<string>, setB: ReadonlySet<string>) {
+export function difference(
+  setA: ReadonlySet<string>,
+  setB: ReadonlySet<string>,
+): ReadonlySet<string> {
   const result = new Set(setA);
   setB.forEach((elem) => result.delete(elem));
   return result;
@@ -23,18 +26,21 @@ export function toggle(open: Set<string>, closed: Set<string>, name: string) {
   }
 }
 
-export function areSetsEqual(set1: ReadonlySet<string>, set2: ReadonlySet<string>): boolean {
-  return set1.size === set2.size && Array.from(set1).every((s) => set2.has(s));
-}
-
-export function intersection(set1: ReadonlySet<string>, set2: ReadonlySet<string>) {
-  const result = new Set();
+export function intersection(
+  set1: ReadonlySet<string>,
+  set2: ReadonlySet<string>,
+): ReadonlySet<string> {
+  const result = new Set<string>();
   set2.forEach((elem) => {
     if (set1.has(elem)) {
       result.add(elem);
     }
   });
   return result;
+}
+
+export function areSetsEqual(set1: ReadonlySet<string>, set2: ReadonlySet<string>): boolean {
+  return set1.size === set2.size && Array.from(set1).every((s) => set2.has(s));
 }
 
 /**

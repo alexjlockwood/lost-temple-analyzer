@@ -41,13 +41,11 @@ ReactGA.send('pageview');
 // TODO: figure out why the main screen doesn't look centered
 
 // TODO: make this percentage based instead?
-const maxLostTempleSize = 720;
+const maxLostTempleSize = 640;
 const columnContainerMargin = 16;
 
-// TODO: make this dynamic based on screen size
-const panelWidth = 720;
 const panelNumColumns = 3;
-const isPanelVisible = false;
+const isPanelFeatureEnabled = true;
 
 const initialState = (function (): InitialState {
   const queryString = getQueryString();
@@ -90,6 +88,7 @@ function App() {
           Math.min(columnContainerWidth, columnContainerHeight - headerContainerHeight),
         );
 
+  const isPanelVisible = isPanelFeatureEnabled;
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
   const [isErrorSnackbarShown, setErrorSnackbarShown] = useState(false);
@@ -290,9 +289,10 @@ function App() {
         </ColumnContainer>
         {isPanelVisible ? (
           <PossiblePathsPanel
-            width={panelWidth}
             numColumns={panelNumColumns}
             possiblePaths={filteredLostTemplePaths}
+            openRooms={openRooms}
+            openDoors={openDoors}
           />
         ) : undefined}
       </RowContainer>
@@ -320,6 +320,8 @@ const RowContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ColumnContainer = styled.div`

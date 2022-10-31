@@ -4,26 +4,43 @@ import LostTemple from './LostTemple';
 import styled from '@emotion/styled';
 import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { intersection } from '../scripts/mathUtils';
 
 interface PossiblePathsPanelProps {
-  readonly width: number;
   readonly numColumns: number;
   readonly possiblePaths: readonly LostTemplePath[];
+  readonly openRooms: ReadonlySet<string>;
+  readonly openDoors: ReadonlySet<string>;
 }
 
-function PossiblePathsPanel({ width, numColumns, possiblePaths }: PossiblePathsPanelProps) {
+// TODO: add empty state
+
+// TODO: make this dynamic based on screen size
+const panelWidth = 600;
+
+function PossiblePathsPanel({
+  numColumns,
+  possiblePaths,
+  openRooms,
+  openDoors,
+}: PossiblePathsPanelProps) {
   const { t } = useTranslation();
-  const columnWidth = (width - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
+  const columnWidth =
+    (panelWidth - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
   const filteredCount = possiblePaths.reduce((p, c) => p + c.count, 0);
   const lostTemplePaths = possiblePaths.map((p) => {
     // TODO: use a unique ID (i.e. the index in the raw data list)
     const key = Array.from(p.openDoors).sort().join('|');
+    const knownRooms = intersection(p.openRooms, openRooms);
+    const knownDoors = intersection(p.openDoors, openDoors);
     return (
       <ItemContainer key={key}>
         <LostTemple
           size={columnWidth}
           openRooms={p.openRooms}
           openDoors={p.openDoors}
+          knownRooms={knownRooms}
+          knownDoors={knownDoors}
           showRoomNames={false}
         />
         <Typography variant="body1">
@@ -36,7 +53,11 @@ function PossiblePathsPanel({ width, numColumns, possiblePaths }: PossiblePathsP
   const possiblePathKey = length === 1 ? 'possiblePaths_one' : 'possiblePaths_other';
   const possiblePathText = t(possiblePathKey, { count: length });
   return (
-    <SidePanel width={width} elevation={4}>
+    <SidePanel
+      sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block', xl: 'block' } }}
+      width={panelWidth}
+      elevation={4}
+    >
       <ColumnContainer>
         <Typography variant="h6">{possiblePathText}</Typography>
         <GridContainer numColumns={numColumns} columnWidth={columnWidth}>

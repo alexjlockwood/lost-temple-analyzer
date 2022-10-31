@@ -20,6 +20,8 @@ interface LostTempleProps {
   readonly openDoors: ReadonlySet<string>;
   readonly closedRooms?: ReadonlySet<string>;
   readonly closedDoors?: ReadonlySet<string>;
+  readonly knownRooms?: ReadonlySet<string>;
+  readonly knownDoors?: ReadonlySet<string>;
   readonly roomPercentMap?: ReadonlyMap<string, number>;
   readonly doorPercentMap?: ReadonlyMap<string, number>;
   readonly onRoomClick?: (roomName: string) => void;
@@ -36,6 +38,8 @@ function LostTemple({
   openDoors,
   closedRooms,
   closedDoors,
+  knownRooms,
+  knownDoors,
   roomPercentMap,
   doorPercentMap,
   onRoomClick,
@@ -74,7 +78,7 @@ function LostTemple({
             key={doorName}
             name={getPercentString(doorPercent)}
             bounds={updatedDoorBounds}
-            color={getColor(openDoors, closedDoors, doorName, doorPercent)}
+            color={getColor(openDoors, closedDoors, knownDoors, doorName, doorPercent)}
             strokeWidth={getStrokeWidth(size)}
             fontSize={doorFontSize}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
@@ -95,7 +99,7 @@ function LostTemple({
             key={doorName}
             name={getPercentString(doorPercent)}
             bounds={updatedDoorBounds}
-            color={getColor(openDoors, closedDoors, doorName, doorPercent)}
+            color={getColor(openDoors, closedDoors, knownDoors, doorName, doorPercent)}
             strokeWidth={getStrokeWidth(size)}
             fontSize={doorFontSize}
             onClick={onDoorClick ? () => onDoorClick(doorName) : undefined}
@@ -110,7 +114,7 @@ function LostTemple({
     for (let c = 0; c < gridSize; c++) {
       const roomName = getRoomName(r, c);
       const roomPercent = roomPercentMap?.get(roomName);
-      const roomColor = getColor(openRooms, closedRooms, roomName, roomPercent);
+      const roomColor = getColor(openRooms, closedRooms, knownRooms, roomName, roomPercent);
       cells.push(
         <Cell
           key={roomName}
@@ -149,10 +153,13 @@ const Container = styled.div<{
 function getColor(
   openNames: ReadonlySet<string>,
   closedNames: ReadonlySet<string> | undefined,
+  knownNames: ReadonlySet<string> | undefined,
   name: string,
   percent: number | undefined,
 ): string {
-  if (openNames.has(name)) {
+  if (knownNames?.has(name)) {
+    return getKnownColor();
+  } else if (openNames.has(name)) {
     return getGreenColor();
   } else if (closedNames?.has(name)) {
     return getRedColor();
@@ -171,6 +178,10 @@ function getGreenColor(isLight: boolean = false) {
 
 function getRedColor(isLight: boolean = false) {
   return isLight ? '#EFC7BE' : `#DB3615`;
+}
+
+function getKnownColor() {
+  return 'rgba(0, 0, 0, 0.4)';
 }
 
 export function getRoomBounds(r: number, c: number, size: number): Bounds {
