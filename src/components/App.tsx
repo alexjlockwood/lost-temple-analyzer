@@ -45,8 +45,8 @@ const maxLostTempleSize = 720;
 const columnContainerMargin = 16;
 
 // TODO: make this dynamic based on screen size
-const panelWidth = 600;
-const panelNumColumns = 2;
+const panelWidth = 720;
+const panelNumColumns = 4;
 const isPanelVisible = false;
 
 const initialState = (function (): InitialState {
@@ -77,17 +77,17 @@ function App() {
   const headerContainerRef = useRef<HTMLDivElement>(null);
   const headerContainerRect = useSize(headerContainerRef);
 
-  const availableWidth = columnContainerRect?.width;
-  const availableHeight = columnContainerRect?.height;
+  const columnContainerWidth = columnContainerRect?.width;
+  const columnContainerHeight = columnContainerRect?.height;
   const headerContainerHeight = headerContainerRect?.height;
   const lostTempleSize =
-    availableWidth === undefined ||
-    availableHeight === undefined ||
+    columnContainerWidth === undefined ||
+    columnContainerHeight === undefined ||
     headerContainerHeight === undefined
       ? undefined
       : Math.min(
           maxLostTempleSize,
-          Math.min(availableWidth, availableHeight - headerContainerHeight),
+          Math.min(columnContainerWidth, columnContainerHeight - headerContainerHeight),
         );
 
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);

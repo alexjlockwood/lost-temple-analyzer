@@ -46,7 +46,7 @@ function PossiblePathsPanel({ width, numColumns, possiblePaths }: PossiblePathsP
 }
 
 const sidePanelPadding = 16;
-const gridPadding = 40;
+const gridPadding = 16;
 
 const SidePanel = styled(Paper)<{ readonly width: number }>`
   width: ${({ width }) => width}px;

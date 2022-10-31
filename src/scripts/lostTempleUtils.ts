@@ -41,6 +41,10 @@ export function isRoomA3(r: number, c: number): boolean {
   return getRoomName(r, c) === 'A3';
 }
 
+export function isRoomE3(r: number, c: number): boolean {
+  return getRoomName(r, c) === 'E3';
+}
+
 export function isBottomDoorA3B3(r: number, c: number): boolean {
   return getBottomDoorName(r, c) === 'A3,B3';
 }
