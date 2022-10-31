@@ -27,6 +27,16 @@ export function areSetsEqual(set1: ReadonlySet<string>, set2: ReadonlySet<string
   return set1.size === set2.size && Array.from(set1).every((s) => set2.has(s));
 }
 
+export function intersection(set1: ReadonlySet<string>, set2: ReadonlySet<string>) {
+  const result = new Set();
+  set2.forEach((elem) => {
+    if (set1.has(elem)) {
+      result.add(elem);
+    }
+  });
+  return result;
+}
+
 /**
  * Returns true if the rectangle intersects with a line.
  */
