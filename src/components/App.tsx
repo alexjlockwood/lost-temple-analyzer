@@ -307,7 +307,7 @@ function App() {
               sx={{
                 pt: 1,
                 opacity: 0.5,
-                display: { xs: 'block', sm: 'block', md: 'block', lg: 'none', xl: 'none' },
+                display: { xs: 'block', sm: 'block', md: 'none', lg: 'none', xl: 'none' },
               }}
             >
               {t('viewOnLargerScreen')}
