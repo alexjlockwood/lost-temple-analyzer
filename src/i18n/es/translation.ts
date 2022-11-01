@@ -8,7 +8,6 @@ export const es = {
     copyLinkToClipboardError: 'No se puede copiar el link al portapapeles',
     possiblePaths_one: '{{count}} posible patrón',
     possiblePaths_other: '{{count}} posibles patrones',
-    // TODO: translate this
-    viewOnLargerScreen: 'View on a larger screen to see the list of possible paths',
+    viewOnLargerScreen: 'Ver en una pantalla más grande para ver la lista de posibles patrones',
   },
 };
