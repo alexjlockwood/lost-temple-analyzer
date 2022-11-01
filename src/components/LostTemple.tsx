@@ -18,7 +18,6 @@ interface LostTempleProps {
   readonly size: number;
   readonly openRooms: ReadonlySet<string>;
   readonly openDoors: ReadonlySet<string>;
-  readonly closedRooms?: ReadonlySet<string>;
   readonly closedDoors?: ReadonlySet<string>;
   readonly knownRooms?: ReadonlySet<string>;
   readonly knownDoors?: ReadonlySet<string>;
@@ -36,7 +35,6 @@ function LostTemple({
   size,
   openRooms,
   openDoors,
-  closedRooms,
   closedDoors,
   knownRooms,
   knownDoors,
@@ -114,7 +112,7 @@ function LostTemple({
     for (let c = 0; c < gridSize; c++) {
       const roomName = getRoomName(r, c);
       const roomPercent = roomPercentMap?.get(roomName);
-      const roomColor = getColor(openRooms, closedRooms, knownRooms, roomName, roomPercent);
+      const roomColor = getColor(openRooms, undefined, knownRooms, roomName, roomPercent);
       cells.push(
         <Cell
           key={roomName}

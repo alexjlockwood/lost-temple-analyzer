@@ -13,7 +13,6 @@ const queryParam = 'p';
 
 export function encodeQueryString(
   openRooms: ReadonlySet<string>,
-  closedRooms: ReadonlySet<string>,
   openDoors: ReadonlySet<string>,
   closedDoors: ReadonlySet<string>,
 ) {
@@ -24,7 +23,7 @@ export function encodeQueryString(
       if (!isRoomA3(r, c)) {
         const roomName = getRoomName(r, c);
         openBinary.push(openRooms.has(roomName) ? 1 : 0);
-        closedBinary.push(closedRooms.has(roomName) ? 1 : 0);
+        closedBinary.push(0);
       }
       if (c !== gridSize - 1) {
         const doorName = getRightDoorName(r, c);
@@ -64,7 +63,6 @@ export function decodeQueryString(queryString: string): InitialState {
   const decodedClosed = decodedBinaryNums[2].concat(decodedBinaryNums[3]);
 
   const openRooms = new Set<string>(initialOpenRooms);
-  const closedRooms = new Set<string>();
   const openDoors = new Set<string>();
   const closedDoors = new Set<string>();
 
@@ -75,9 +73,6 @@ export function decodeQueryString(queryString: string): InitialState {
         const roomName = getRoomName(r, c);
         if (decodedOpen.charAt(currentOffset) === '1') {
           openRooms.add(roomName);
-        }
-        if (decodedClosed.charAt(currentOffset) === '1') {
-          closedRooms.add(roomName);
         }
         currentOffset++;
       }
@@ -103,7 +98,7 @@ export function decodeQueryString(queryString: string): InitialState {
       }
     }
   }
-  return { openRooms, closedRooms, openDoors, closedDoors };
+  return { openRooms, openDoors, closedDoors };
 }
 
 export function copyQueryStringToClipboard(

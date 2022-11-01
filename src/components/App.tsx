@@ -69,7 +69,6 @@ function App() {
   const { t } = useTranslation();
 
   const [openRooms, setOpenRooms] = useState<ReadonlySet<string>>(initialState.openRooms);
-  const [closedRooms, setClosedRooms] = useState<ReadonlySet<string>>(initialState.closedRooms);
   const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(initialState.openDoors);
   const [closedDoors, setClosedDoors] = useState<ReadonlySet<string>>(initialState.closedDoors);
   const [isDragging, setIsDragging] = useState(false);
@@ -120,7 +119,7 @@ function App() {
   const onErrorSnackbarClosed = () => setErrorSnackbarShown(false);
 
   const onGetLinkClick = () => {
-    const queryString = encodeQueryString(openRooms, closedRooms, openDoors, closedDoors);
+    const queryString = encodeQueryString(openRooms, openDoors, closedDoors);
     copyQueryStringToClipboard(
       queryString,
       () => {
@@ -141,14 +140,13 @@ function App() {
       return (
         Array.from(openDoors).every((door) => pathOpenDoors.has(door)) &&
         Array.from(openRooms).every((room) => pathOpenRooms.has(room)) &&
-        Array.from(closedDoors).every((door) => !pathOpenDoors.has(door)) &&
-        Array.from(closedRooms).every((room) => !pathOpenRooms.has(room))
+        Array.from(closedDoors).every((door) => !pathOpenDoors.has(door))
       );
     })
     .sort((a, b) => b.count - a.count);
 
   const roomPercentMap = createPercentMap(
-    difference(allRoomNames, union(openRooms, closedRooms)),
+    difference(allRoomNames, openRooms),
     filteredLostTemplePaths,
     (roomName, path) => path.openRooms.has(roomName),
   );
@@ -181,9 +179,6 @@ function App() {
     const updatedOpenRooms = new Set(openRooms);
     updatedOpenRooms.add(roomName);
     setOpenRooms(updatedOpenRooms);
-    const updatedClosedRooms = new Set(closedRooms);
-    updatedClosedRooms.delete(roomName);
-    setClosedRooms(updatedClosedRooms);
   };
 
   const selectDoor = (doorName: string) => {
@@ -262,14 +257,10 @@ function App() {
   };
 
   const isInitialState =
-    areSetsEqual(openRooms, initialOpenRooms) &&
-    closedRooms.size === 0 &&
-    openDoors.size === 0 &&
-    closedDoors.size === 0;
+    areSetsEqual(openRooms, initialOpenRooms) && openDoors.size === 0 && closedDoors.size === 0;
 
   const onResetClick = () => {
     setOpenRooms(initialOpenRooms);
-    setClosedRooms(new Set());
     setOpenDoors(new Set());
     setClosedDoors(new Set());
   };
@@ -282,7 +273,6 @@ function App() {
         size={lostTempleSize}
         openRooms={openRooms}
         openDoors={openDoors}
-        closedRooms={closedRooms}
         closedDoors={closedDoors}
         roomPercentMap={roomPercentMap}
         doorPercentMap={doorPercentMap}
