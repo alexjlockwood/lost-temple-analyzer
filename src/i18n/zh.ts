@@ -1,6 +1,7 @@
 export const zh = {
   common: {
-    description: '点击或拖动来与下方的路线图交互，查看不同情况下剩余门的正确概率',
+    description:
+      '点击或拖动下方的门和房间，查看不同情况下剩余门的正确概率。点击一次标记为正确，点击两次标记为错误，点击三次来恢复未知状态。',
     resetGridButton: '重置路线图',
     copyLinkButton: '拷贝路线链接',
     copyLinkToClipboardSuccess: '已拷贝链接到剪贴板',
