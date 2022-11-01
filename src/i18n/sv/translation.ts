@@ -1,7 +1,7 @@
 export const sv = {
   common: {
     description:
-      'Klicka eller dra de rummen och dörrarna under för att visa den dörrens chans av andra vägar',
+      'Klicka eller dra rummen och dörrarna under för att visa chanserna av de olika vägarna. Klicka en dörr en gång för att markera den öppen, två gånger för att markera den stängd, och tre gånger för att rensa.',
     resetGridButton: 'Börja om rutnät',
     copyLinkButton: 'Kopiera länken',
     copyLinkToClipboardSuccess: 'Länken kopierad till urklipp',

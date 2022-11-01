@@ -368,6 +368,7 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: ${maxLostTempleSize}px;
 `;
 
 const ButtonContainer = styled.div`
