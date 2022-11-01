@@ -39,6 +39,7 @@ ReactGA.send('pageview');
 // TODO: add discord link, link to twitter, about section
 // TODO: handle onPointerCancel?
 // TODO: figure out why the main screen doesn't look centered
+// TODO: make stroke width color less dark
 
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 640;
