@@ -48,7 +48,7 @@ function PossiblePathsPanel({
           knownDoors={knownDoors}
           showRoomNames={false}
         />
-        <Typography align="center" variant="body1">
+        <Typography align="center" variant="body2">
           {`${p.count} / ${filteredCount} (${textPercent}%)`}
         </Typography>
       </ItemContainer>
