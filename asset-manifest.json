@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/lost-temple-analyzer/static/css/main.b18c9885.css",
-    "main.js": "/lost-temple-analyzer/static/js/main.b0651d83.js",
+    "main.js": "/lost-temple-analyzer/static/js/main.15bfefdc.js",
     "static/js/787.9ae85c95.chunk.js": "/lost-temple-analyzer/static/js/787.9ae85c95.chunk.js",
     "index.html": "/lost-temple-analyzer/index.html",
     "main.b18c9885.css.map": "/lost-temple-analyzer/static/css/main.b18c9885.css.map",
-    "main.b0651d83.js.map": "/lost-temple-analyzer/static/js/main.b0651d83.js.map",
+    "main.15bfefdc.js.map": "/lost-temple-analyzer/static/js/main.15bfefdc.js.map",
     "787.9ae85c95.chunk.js.map": "/lost-temple-analyzer/static/js/787.9ae85c95.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b18c9885.css",
-    "static/js/main.b0651d83.js"
+    "static/js/main.15bfefdc.js"
   ]
 }
