@@ -1,7 +1,7 @@
 export const es = {
   common: {
     description:
-      'Haga click o arrastre el Templo Perdido a continuación para ver las probabilidades de las puertas de los diferentes patrones',
+      'Haz click o arrastre los cuartos y las puertas a continuación para ver las probabilidades de los diferentes patrones',
     resetGridButton: 'Restablecer cuadrícula',
     copyLinkButton: 'Copiar link',
     copyLinkToClipboardSuccess: 'Link copiado al portapapeles',
