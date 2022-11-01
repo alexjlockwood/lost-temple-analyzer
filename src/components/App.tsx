@@ -53,6 +53,7 @@ const panelExtraLargeNumColumns = 4;
 const panelLargeNumColumns = 3;
 const panelMediumNumColumns = 2;
 
+// Debug flag for rainbow to draw paths his own paths easily.
 const debugHideProbabilities = new URLSearchParams(window.location.search).get('hideProbabilities');
 
 const initialState = (function (): InitialState {
