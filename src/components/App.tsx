@@ -161,10 +161,12 @@ function App() {
 
   const onRoomClick = (roomName: string) => {
     const open = new Set(openRooms);
-    const closed = new Set(closedRooms);
-    toggle(open, closed, roomName);
+    if (open.has(roomName)) {
+      open.delete(roomName);
+    } else {
+      open.add(roomName);
+    }
     setOpenRooms(open);
-    setClosedRooms(closed);
   };
 
   const onDoorClick = (doorName: string) => {
