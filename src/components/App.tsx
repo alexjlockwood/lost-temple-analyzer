@@ -53,6 +53,8 @@ const panelExtraLargeNumColumns = 4;
 const panelLargeNumColumns = 3;
 const panelMediumNumColumns = 2;
 
+const debugHideProbabilities = new URLSearchParams(window.location.search).get('hideProbabilities');
+
 const initialState = (function (): InitialState {
   const queryString = getQueryString();
   return queryString === null ? defaultInitialState : decodeQueryString(queryString);
@@ -145,17 +147,21 @@ function App() {
     })
     .sort((a, b) => b.count - a.count);
 
-  const roomPercentMap = createPercentMap(
-    difference(allRoomNames, openRooms),
-    filteredLostTemplePaths,
-    (roomName, path) => path.openRooms.has(roomName),
-  );
+  const roomPercentMap = debugHideProbabilities
+    ? undefined
+    : createPercentMap(
+        difference(allRoomNames, openRooms),
+        filteredLostTemplePaths,
+        (roomName, path) => path.openRooms.has(roomName),
+      );
 
-  const doorPercentMap = createPercentMap(
-    difference(allDoorNames, union(openDoors, closedDoors)),
-    filteredLostTemplePaths,
-    (doorName, path) => path.openDoors.has(doorName),
-  );
+  const doorPercentMap = debugHideProbabilities
+    ? undefined
+    : createPercentMap(
+        difference(allDoorNames, union(openDoors, closedDoors)),
+        filteredLostTemplePaths,
+        (doorName, path) => path.openDoors.has(doorName),
+      );
 
   const onRoomClick = (roomName: string) => {
     const open = new Set(openRooms);
