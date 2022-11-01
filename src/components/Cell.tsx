@@ -31,7 +31,7 @@ const Square = styled.div<{
   box-sizing: border-box;
   position: absolute;
   background: ${(props) => props.color};
-  border: ${(props) => props.strokeWidth}px solid #000;
+  border: ${(props) => props.strokeWidth}px solid #333;
   text-align: center;
   left: ${(props) => props.bounds.left}px;
   top: ${(props) => props.bounds.top}px;
