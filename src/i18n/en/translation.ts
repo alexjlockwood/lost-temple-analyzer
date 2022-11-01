@@ -8,5 +8,6 @@ export const en = {
     copyLinkToClipboardError: 'Unable to copy link to clipboard',
     possiblePaths_one: '{{count}} possible path',
     possiblePaths_other: '{{count}} possible paths',
+    viewOnLargerScreen: 'View on a larger screen to see the list of possible paths',
   },
 };

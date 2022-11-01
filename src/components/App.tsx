@@ -276,6 +276,18 @@ function App() {
             <Typography align="center" variant="subtitle1">
               {t('description')}
             </Typography>
+            <Typography
+              align="center"
+              variant="body2"
+              fontStyle="italic"
+              sx={{
+                pt: 1,
+                opacity: 0.5,
+                display: { xs: 'block', sm: 'block', md: 'block', lg: 'none', xl: 'none' },
+              }}
+            >
+              {t('viewOnLargerScreen')}
+            </Typography>
             <ButtonContainer>
               <Button disabled={isInitialState} onClick={onResetClick} color="inherit">
                 {t('resetGridButton')}

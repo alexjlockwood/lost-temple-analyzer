@@ -7,5 +7,7 @@ export const zh = {
     copyLinkToClipboardError: '拷贝链接到剪贴板时出错',
     possiblePaths_one: '{{count}} 种可能的路线',
     possiblePaths_other: '{{count}} 种可能的路线',
+    // TODO: translate this
+    viewOnLargerScreen: 'View on a larger screen to see the list of possible paths',
   },
 };
