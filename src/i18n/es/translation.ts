@@ -6,8 +6,7 @@ export const es = {
     copyLinkButton: 'Copiar link',
     copyLinkToClipboardSuccess: 'Link copiado al portapapeles',
     copyLinkToClipboardError: 'No se puede copiar el link al portapapeles',
-    // TODO: translate these
-    possiblePaths_one: '{{count}} possible path',
-    possiblePaths_other: '{{count}} possible paths',
+    possiblePaths_one: '{{count}} posible patrón',
+    possiblePaths_other: '{{count}} posibles patrones',
   },
 };
