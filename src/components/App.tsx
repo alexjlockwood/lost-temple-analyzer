@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
-import { Alert, Button, Snackbar, Typography } from '@mui/material';
+import { Alert, Button, Snackbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
 
 import ReactGA from 'react-ga4';
@@ -44,8 +44,13 @@ ReactGA.send('pageview');
 const maxLostTempleSize = 640;
 const columnContainerMargin = 16;
 
-const panelNumColumns = 3;
-const isPanelFeatureEnabled = true;
+// TODO: make this dynamic based on screen size
+const panelExtraLargeWidth = 800;
+const panelLargeWidth = 600;
+const panelMediumWidth = 400;
+const panelExtraLargeNumColumns = 4;
+const panelLargeNumColumns = 3;
+const panelMediumNumColumns = 2;
 
 const initialState = (function (): InitialState {
   const queryString = getQueryString();
@@ -88,7 +93,26 @@ function App() {
           Math.min(columnContainerWidth, columnContainerHeight - headerContainerHeight),
         );
 
-  const isPanelVisible = isPanelFeatureEnabled;
+  const theme = useTheme();
+  const isAtLeastExtraLargeBreakpoint = useMediaQuery(theme.breakpoints.up('xl'));
+  const isAtLeastLargeBreakpoint = useMediaQuery(theme.breakpoints.up('lg'));
+  const isAtLeastMediumBreakpoint = useMediaQuery(theme.breakpoints.up('md'));
+  const panelWidth = isAtLeastExtraLargeBreakpoint
+    ? panelExtraLargeWidth
+    : isAtLeastLargeBreakpoint
+    ? panelLargeWidth
+    : isAtLeastMediumBreakpoint
+    ? panelMediumWidth
+    : 0;
+  const panelNumColumns = isAtLeastExtraLargeBreakpoint
+    ? panelExtraLargeNumColumns
+    : isAtLeastLargeBreakpoint
+    ? panelLargeNumColumns
+    : isAtLeastMediumBreakpoint
+    ? panelMediumNumColumns
+    : 0;
+  const isPanelVisible = isAtLeastMediumBreakpoint;
+
   const [isSuccessSnackbarShown, setSuccessSnackbarShown] = useState(false);
   const onSuccessSnackbarClosed = () => setSuccessSnackbarShown(false);
   const [isErrorSnackbarShown, setErrorSnackbarShown] = useState(false);
@@ -301,6 +325,7 @@ function App() {
         </ColumnContainer>
         {isPanelVisible ? (
           <PossiblePathsPanel
+            width={panelWidth}
             numColumns={panelNumColumns}
             possiblePaths={filteredLostTemplePaths}
             openRooms={openRooms}

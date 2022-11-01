@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { intersection } from '../scripts/mathUtils';
 
 interface PossiblePathsPanelProps {
+  readonly width: number;
   readonly numColumns: number;
   readonly possiblePaths: readonly LostTemplePath[];
   readonly openRooms: ReadonlySet<string>;
@@ -15,18 +16,15 @@ interface PossiblePathsPanelProps {
 
 // TODO: add empty state
 
-// TODO: make this dynamic based on screen size
-const panelWidth = 600;
-
 function PossiblePathsPanel({
+  width,
   numColumns,
   possiblePaths,
   openRooms,
   openDoors,
 }: PossiblePathsPanelProps) {
   const { t } = useTranslation();
-  const columnWidth =
-    (panelWidth - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
+  const columnWidth = (width - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
   const filteredCount = possiblePaths.reduce((p, c) => p + c.count, 0);
   const lostTemplePaths = possiblePaths.map((p) => {
     const knownRooms = intersection(p.openRooms, openRooms);
@@ -56,17 +54,12 @@ function PossiblePathsPanel({
       </ItemContainer>
     );
   });
+
   const length = possiblePaths.length;
   const possiblePathKey = length === 1 ? 'possiblePaths_one' : 'possiblePaths_other';
   const possiblePathText = t(possiblePathKey, { count: length });
-
-  // TODO: make this breakpoint shit less hacky/noob :|
   return (
-    <SidePanel
-      sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block', xl: 'block' } }}
-      width={panelWidth}
-      elevation={4}
-    >
+    <SidePanel width={width} elevation={4}>
       <ColumnContainer>
         <Typography variant="h6">{possiblePathText}</Typography>
         <GridContainer numColumns={numColumns} columnWidth={columnWidth}>
