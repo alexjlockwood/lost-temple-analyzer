@@ -1,7 +1,7 @@
 export const id = {
   common: {
     description:
-      'Klik untuk memilih ruang dan pintu di bawah untuk melihat angka probabilitas masing-masing jalur. Klik pintu satu kali jika pintu itu berhasil terbuka, klik dua kali jika gagal, klik tiga kali untuk mengulang dari awal.',
+      'Klik ruang dan pintu di bawah untuk melihat angka probabilitas masing-masing jalur. Klik pintu satu kali jika pintu itu berhasil terbuka, klik dua kali jika gagal, klik tiga kali untuk mengulang dari awal.',
     resetGridButton: 'Ulangi Dari Awal',
     copyLinkButton: 'Salin link',
     copyLinkToClipboardSuccess: 'Link berhasil disalin',
