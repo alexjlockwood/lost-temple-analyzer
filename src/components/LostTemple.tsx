@@ -55,7 +55,7 @@ function LostTemple({
   const cells: JSX.Element[] = [];
 
   const getPercentString = (percent: number | undefined) => {
-    const rounded = percent === undefined ? undefined : Math.round(percent);
+    const rounded = percent === undefined ? undefined : Math.round(Math.max(percent, 1));
     return rounded === 0 || rounded === 100 || rounded === undefined ? undefined : `${rounded}%`;
   };
 
