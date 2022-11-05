@@ -32,7 +32,6 @@ import PossiblePathsPanel from './PossiblePathsPanel';
 ReactGA.initialize('G-J8W430VTF9');
 ReactGA.send('pageview');
 
-// TODO: it doesnt work in landscape on phones
 // TODO: have some indication that a path is impossible in the UI if it is chosen
 // TODO: add service worker eventually so can be put on home screen on phone
 // TODO: show the link in the snackbar if it fails?
