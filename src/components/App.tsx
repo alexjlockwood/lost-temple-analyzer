@@ -44,6 +44,7 @@ ReactGA.send('pageview');
 // TODO: make this percentage based instead?
 const maxLostTempleSize = 640;
 const columnContainerMargin = 16;
+const minColumnContainerHeight = 400;
 
 // TODO: make this dynamic based on screen size
 const panelExtraLargeWidth = 800;
@@ -297,21 +298,27 @@ function App() {
       <RowContainer>
         <ColumnContainer ref={columnContainerRef}>
           <HeaderContainer ref={headerContainerRef}>
-            <Typography align="center" variant="subtitle1">
-              {t('description')}
-            </Typography>
-            <Typography
-              align="center"
-              variant="body2"
-              fontStyle="italic"
-              sx={{
-                pt: 1,
-                opacity: 0.5,
-                display: { xs: 'block', sm: 'block', md: 'none', lg: 'none', xl: 'none' },
-              }}
-            >
-              {t('viewOnLargerScreen')}
-            </Typography>
+            {columnContainerHeight === undefined ||
+            columnContainerHeight >= minColumnContainerHeight ? (
+              <>
+                <Typography align="center" variant="subtitle1">
+                  {t('description')}
+                </Typography>
+                <Typography
+                  align="center"
+                  variant="body2"
+                  fontStyle="italic"
+                  sx={{
+                    pt: 1,
+                    opacity: 0.5,
+                    display: { xs: 'block', sm: 'block', md: 'none', lg: 'none', xl: 'none' },
+                  }}
+                >
+                  {t('viewOnLargerScreen')}
+                </Typography>
+              </>
+            ) : undefined}
+
             <ButtonContainer>
               <Button disabled={isInitialState} onClick={onResetClick} color="inherit">
                 {t('resetGridButton')}
