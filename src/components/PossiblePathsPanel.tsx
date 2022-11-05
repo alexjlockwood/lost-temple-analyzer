@@ -75,7 +75,7 @@ const gridPadding = 32;
 
 const SidePanel = styled(Paper)<{ readonly width: number }>`
   width: ${({ width }) => width}px;
-  height: 100vh;
+  height: 100%;
   padding: ${sidePanelPadding}px;
   box-sizing: border-box;
   overflow-y: auto;
