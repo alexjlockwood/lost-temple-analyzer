@@ -1,4 +1,4 @@
-export const en = {
+export const de = {
   common: {
     description:
       'Klicke oder ziehe die Räume und Türen unten, um die Wahrscheinlichkeiten der verschiedenen Wege anzuzeigen. Klicke einmal auf eine Tür, um sie als offen zu markieren, zweimal, um sie als geschlossen zu markieren und dreimal, um sie zu zurückzusetzen.',
