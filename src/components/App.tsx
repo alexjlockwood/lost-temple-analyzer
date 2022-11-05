@@ -1,6 +1,6 @@
 import '../i18n/config';
 import { useTranslation } from 'react-i18next';
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { LostTemplePath } from '../scripts/lostTemplePath';
@@ -31,6 +31,13 @@ import PossiblePathsPanel from './PossiblePathsPanel';
 
 ReactGA.initialize('G-J8W430VTF9');
 ReactGA.send('pageview');
+
+function updateWindowInnerHeight() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+updateWindowInnerHeight();
 
 // TODO: have some indication that a path is impossible in the UI if it is chosen
 // TODO: add service worker eventually so can be put on home screen on phone
@@ -77,6 +84,12 @@ function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    const resizeListener = () => updateWindowInnerHeight();
+    window.addEventListener('resize', resizeListener);
+    return () => window.removeEventListener('resize', resizeListener);
+  }, []);
 
   const columnContainerRef = useRef<HTMLDivElement>(null);
   const columnContainerRect = useSize(columnContainerRef);
@@ -356,6 +369,7 @@ function App() {
 
 const AppContainer = styled.div`
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
 `;
 
 const RowContainer = styled.div`
