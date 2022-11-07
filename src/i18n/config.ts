@@ -9,6 +9,7 @@ import { fi } from './fi';
 import { fr } from './fr';
 import { id } from './id';
 import { ko } from './ko';
+import { nb } from './nb';
 import { nl } from './nl';
 import { pl } from './pl';
 import { ru } from './ru';
@@ -16,7 +17,7 @@ import { sv } from './sv';
 import { zh } from './zh';
 
 i18n.use(LanguageDetector).use(initReactI18next).init({
-  resources: { /*ar,*/ de, en, es, fi, fr, id, ko, nl, pl, ru, sv, zh },
+  resources: { /*ar,*/ de, en, es, fi, fr, id, ko, nb, nl, pl, ru, sv, zh },
   defaultNS: 'common',
   fallbackLng: 'en',
 });
