@@ -6,6 +6,7 @@ export const en = {
     copyLinkButton: 'Copy link',
     copyLinkToClipboardSuccess: 'Link copied to clipboard',
     copyLinkToClipboardError: 'Unable to copy link to clipboard',
+    possiblePaths_zero: '{{count}} possible paths',
     possiblePaths_one: '{{count}} possible path',
     possiblePaths_two: '{{count}} possible paths',
     possiblePaths_threeToTen: '{{count}} possible paths',

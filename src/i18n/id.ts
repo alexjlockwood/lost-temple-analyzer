@@ -6,6 +6,7 @@ export const id = {
     copyLinkButton: 'Salin link',
     copyLinkToClipboardSuccess: 'Link berhasil disalin',
     copyLinkToClipboardError: 'Link tidak berhasil disalin',
+    possiblePaths_zero: '{{count}} kemungkinan jalur.',
     possiblePaths_one: '{{count}} kemungkinan jalur.',
     possiblePaths_two: '{{count}} kemungkinan jalur.',
     possiblePaths_threeToTen: '{{count}} kemungkinan jalur.',

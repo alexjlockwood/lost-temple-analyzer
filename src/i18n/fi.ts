@@ -6,6 +6,7 @@ export const fi = {
     copyLinkButton: 'Kopioi linkki',
     copyLinkToClipboardSuccess: 'Linkki kopioitu leikepöydälle',
     copyLinkToClipboardError: 'Linkin kopiointi leikepöydälle epäonnistui',
+    possiblePaths_zero: '{{count}} mahdollista reittiä',
     possiblePaths_one: '{{count}} mahdollinen reitti',
     possiblePaths_two: '{{count}} mahdollista reittiä',
     possiblePaths_threeToTen: '{{count}} mahdollista reittiä',

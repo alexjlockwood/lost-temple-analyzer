@@ -6,6 +6,7 @@ export const sv = {
     copyLinkButton: 'Kopiera länken',
     copyLinkToClipboardSuccess: 'Länken kopierad till urklipp',
     copyLinkToClipboardError: 'Går inte att kopiera till urklipp',
+    possiblePaths_zero: '{{count}} möjliga vägar',
     possiblePaths_one: '{{count}} möjlig väg',
     possiblePaths_two: '{{count}} möjliga vägar',
     possiblePaths_threeToTen: '{{count}} möjliga vägar',

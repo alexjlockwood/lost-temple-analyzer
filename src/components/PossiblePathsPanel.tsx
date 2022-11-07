@@ -57,7 +57,9 @@ function PossiblePathsPanel({
 
   const length = possiblePaths.length;
   const possiblePathKey =
-    length === 1
+    length === 0
+      ? 'possiblePaths_zero'
+      : length === 1
       ? 'possiblePaths_one'
       : length === 2
       ? 'possiblePaths_two'

@@ -6,6 +6,7 @@ export const nb = {
     copyLinkButton: 'Kopier link',
     copyLinkToClipboardSuccess: 'Link kopiert til utklippstavlen',
     copyLinkToClipboardError: 'Kunne ikke kopiere link til utklippstavlen',
+    possiblePaths_zero: '{{count}} mulige veier',
     possiblePaths_one: '{{count}} mulig vei',
     possiblePaths_two: '{{count}} mulige veier',
     possiblePaths_threeToTen: '{{count}} mulige veier',

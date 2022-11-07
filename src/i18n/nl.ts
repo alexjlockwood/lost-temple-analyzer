@@ -6,6 +6,7 @@ export const nl = {
     copyLinkButton: 'Kopieer link',
     copyLinkToClipboardSuccess: 'Link gekopieerd naar klembord',
     copyLinkToClipboardError: 'Niet mogelijk om link naar klembord te kopieren',
+    possiblePaths_zero: '{{count}} mogelijke routes',
     possiblePaths_one: '{{count}} mogelijke route',
     possiblePaths_two: '{{count}} mogelijke routes',
     possiblePaths_threeToTen: '{{count}} mogelijke routes',

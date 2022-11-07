@@ -6,6 +6,7 @@ export const pl = {
     copyLinkButton: 'Zkopiuj linka',
     copyLinkToClipboardSuccess: 'Link skopiowany do schowka',
     copyLinkToClipboardError: 'Nie można skopiować linku do schowka',
+    possiblePaths_zero: '{{count}} możliwych ścieżek',
     possiblePaths_one: '{{count}} możliwa ścieżka',
     possiblePaths_two: '{{count}} możliwych ścieżek',
     possiblePaths_threeToTen: '{{count}} możliwych ścieżek',

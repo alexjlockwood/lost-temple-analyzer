@@ -6,6 +6,7 @@ export const de = {
     copyLinkButton: 'Link kopieren',
     copyLinkToClipboardSuccess: 'Link in die Zwischenablage kopiert',
     copyLinkToClipboardError: 'Link kann nicht in die Zwischenablage kopiert werden',
+    possiblePaths_zero: '{{count}} mögliche Wege',
     possiblePaths_one: '{{count}} möglicher Weg',
     possiblePaths_two: '{{count}} mögliche Wege',
     possiblePaths_threeToTen: '{{count}} mögliche Wege',

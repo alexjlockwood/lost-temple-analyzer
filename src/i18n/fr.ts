@@ -6,6 +6,7 @@ export const fr = {
     copyLinkButton: 'Copier le lien',
     copyLinkToClipboardSuccess: 'Lien copié dans le presse-papiers',
     copyLinkToClipboardError: 'Impossible de copier le lien dans le presse-papiers',
+    possiblePaths_zero: '{{count}} chemins possibles',
     possiblePaths_one: '{{count}} chemin possible',
     possiblePaths_two: '{{count}} chemins possibles',
     possiblePaths_threeToTen: '{{count}} chemins possibles',
