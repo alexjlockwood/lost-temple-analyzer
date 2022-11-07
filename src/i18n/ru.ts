@@ -7,6 +7,8 @@ export const ru = {
     copyLinkToClipboardSuccess: 'Ссылка скопирована в буфер обмена',
     copyLinkToClipboardError: 'Не удалось скопировать ссылку в буфер обмена',
     possiblePaths_one: '{{count}} возможного пути',
+    possiblePaths_two: '{{count}} возможных путей',
+    possiblePaths_threeToTen: '{{count}} возможных путей',
     possiblePaths_other: '{{count}} возможных путей',
     viewOnLargerScreen: 'Просмотрите на увеличенном экране, чтобы увидеть список возможных путей',
   },

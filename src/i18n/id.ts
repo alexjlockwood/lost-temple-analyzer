@@ -7,6 +7,8 @@ export const id = {
     copyLinkToClipboardSuccess: 'Link berhasil disalin',
     copyLinkToClipboardError: 'Link tidak berhasil disalin',
     possiblePaths_one: '{{count}} kemungkinan jalur.',
+    possiblePaths_two: '{{count}} kemungkinan jalur.',
+    possiblePaths_threeToTen: '{{count}} kemungkinan jalur.',
     possiblePaths_other: '{{count}} kemungkinan jalur.',
     viewOnLargerScreen: 'Lihat daftar kemungkinan jalur di layar yang lebih besar.',
   },

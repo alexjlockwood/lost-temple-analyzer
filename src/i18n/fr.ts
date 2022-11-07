@@ -7,6 +7,8 @@ export const fr = {
     copyLinkToClipboardSuccess: 'Lien copié dans le presse-papiers',
     copyLinkToClipboardError: 'Impossible de copier le lien dans le presse-papiers',
     possiblePaths_one: '{{count}} chemin possible',
+    possiblePaths_two: '{{count}} chemins possibles',
+    possiblePaths_threeToTen: '{{count}} chemins possibles',
     possiblePaths_other: '{{count}} chemins possibles',
     viewOnLargerScreen: 'Vue sur un menu plus large pour voir la liste des chemins possibles',
   },

@@ -7,6 +7,8 @@ export const ko = {
     copyLinkToClipboardSuccess: '링크가 클립보드에 복사되었습니다',
     copyLinkToClipboardError: '링크를 클립보드에 복사할 수 없습니다',
     possiblePaths_one: '{{count}}개의 가능한 경로',
+    possiblePaths_two: '{{count}}개의 가능한 경로',
+    possiblePaths_threeToTen: '{{count}}개의 가능한 경로',
     possiblePaths_other: '{{count}}개의 가능한 경로',
     viewOnLargerScreen: '가능한 경로 목록을 보려면 더 큰 화면으로 확대하세요',
   },

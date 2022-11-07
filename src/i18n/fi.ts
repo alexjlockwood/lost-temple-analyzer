@@ -7,6 +7,8 @@ export const fi = {
     copyLinkToClipboardSuccess: 'Linkki kopioitu leikepöydälle',
     copyLinkToClipboardError: 'Linkin kopiointi leikepöydälle epäonnistui',
     possiblePaths_one: '{{count}} mahdollinen reitti',
+    possiblePaths_two: '{{count}} mahdollista reittiä',
+    possiblePaths_threeToTen: '{{count}} mahdollista reittiä',
     possiblePaths_other: '{{count}} mahdollista reittiä',
     viewOnLargerScreen:
       'Tarkastele sivua suuremmalla näytöllä tai selainikkunalla nähdäksesi kaikki mahdolliset reitit',

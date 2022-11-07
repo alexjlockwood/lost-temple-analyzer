@@ -7,6 +7,8 @@ export const sv = {
     copyLinkToClipboardSuccess: 'Länken kopierad till urklipp',
     copyLinkToClipboardError: 'Går inte att kopiera till urklipp',
     possiblePaths_one: '{{count}} möjlig väg',
+    possiblePaths_two: '{{count}} möjliga vägar',
+    possiblePaths_threeToTen: '{{count}} möjliga vägar',
     possiblePaths_other: '{{count}} möjliga vägar',
     viewOnLargerScreen: 'Visa på en större skärm för att se listan av olika vägar',
   },

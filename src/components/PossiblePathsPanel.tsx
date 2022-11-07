@@ -56,7 +56,14 @@ function PossiblePathsPanel({
   });
 
   const length = possiblePaths.length;
-  const possiblePathKey = length === 1 ? 'possiblePaths_one' : 'possiblePaths_other';
+  const possiblePathKey =
+    length === 1
+      ? 'possiblePaths_one'
+      : length === 2
+      ? 'possiblePaths_two'
+      : 3 <= length && length <= 10
+      ? 'possiblePaths_threeToTen'
+      : 'possiblePaths_other';
   const possiblePathText = t(possiblePathKey, { count: length });
   return (
     <SidePanel width={width} elevation={4}>

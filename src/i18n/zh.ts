@@ -7,6 +7,8 @@ export const zh = {
     copyLinkToClipboardSuccess: '已拷贝链接到剪贴板',
     copyLinkToClipboardError: '拷贝链接到剪贴板时出错',
     possiblePaths_one: '{{count}} 种可能的路线',
+    possiblePaths_two: '{{count}} 种可能的路线',
+    possiblePaths_threeToTen: '{{count}} 种可能的路线',
     possiblePaths_other: '{{count}} 种可能的路线',
     viewOnLargerScreen: '要查阅可能的路线列表需要在更大分辨率的屏幕上浏览本网页',
   },

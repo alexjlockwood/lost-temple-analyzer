@@ -7,6 +7,8 @@ export const es = {
     copyLinkToClipboardSuccess: 'Link copiado al portapapeles',
     copyLinkToClipboardError: 'No se puede copiar el link al portapapeles',
     possiblePaths_one: '{{count}} posible patrón',
+    possiblePaths_two: '{{count}} posibles patrones',
+    possiblePaths_threeToTen: '{{count}} posibles patrones',
     possiblePaths_other: '{{count}} posibles patrones',
     viewOnLargerScreen: 'Ver en una pantalla más grande para ver la lista de posibles patrones',
   },

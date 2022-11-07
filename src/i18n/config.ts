@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+import { ar } from './ar';
 import { de } from './de';
 import { en } from './en';
 import { es } from './es';
@@ -15,7 +16,7 @@ import { sv } from './sv';
 import { zh } from './zh';
 
 i18n.use(LanguageDetector).use(initReactI18next).init({
-  resources: { de, en, es, fi, fr, id, ko, nl, pl, ru, sv, zh },
+  resources: { /*ar,*/ de, en, es, fi, fr, id, ko, nl, pl, ru, sv, zh },
   defaultNS: 'common',
   fallbackLng: 'en',
 });

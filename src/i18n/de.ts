@@ -7,6 +7,8 @@ export const de = {
     copyLinkToClipboardSuccess: 'Link in die Zwischenablage kopiert',
     copyLinkToClipboardError: 'Link kann nicht in die Zwischenablage kopiert werden',
     possiblePaths_one: '{{count}} möglicher Weg',
+    possiblePaths_two: '{{count}} mögliche Wege',
+    possiblePaths_threeToTen: '{{count}} mögliche Wege',
     possiblePaths_other: '{{count}} mögliche Wege',
     viewOnLargerScreen:
       'Auf einem größeren Bildschirm anzeigen, um die Liste der möglichen Pfade zu sehen',

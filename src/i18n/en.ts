@@ -7,6 +7,8 @@ export const en = {
     copyLinkToClipboardSuccess: 'Link copied to clipboard',
     copyLinkToClipboardError: 'Unable to copy link to clipboard',
     possiblePaths_one: '{{count}} possible path',
+    possiblePaths_two: '{{count}} possible paths',
+    possiblePaths_threeToTen: '{{count}} possible paths',
     possiblePaths_other: '{{count}} possible paths',
     viewOnLargerScreen: 'View on a larger screen to see the list of possible paths',
   },
