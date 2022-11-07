@@ -20,5 +20,4 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
   resources: { ar, de, en, es, fi, fr, id, ko, nb, nl, pl, ru, sv, zh },
   defaultNS: 'common',
   fallbackLng: 'en',
-  lng: 'ar',
 });
