@@ -6,7 +6,7 @@ export const ar = {
     copyLinkButton: 'نسخ الرابط',
     copyLinkToClipboardSuccess: 'تم نسخ الرابط إلى الحافظة',
     copyLinkToClipboardError: 'تعذر نسخ الرابط إلى المحفظة',
-    possiblePaths_zero: 'لا يوجد مسارات ممكنة',
+    possiblePaths_zero: 'لا توجد مسارات ممكنة',
     possiblePaths_one: 'مسار واحد ممكن',
     possiblePaths_two: 'مساران ممكنان',
     possiblePaths_threeToTen: '{{count}} مسارات ممكنة',
