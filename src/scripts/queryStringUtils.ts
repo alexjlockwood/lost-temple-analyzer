@@ -7,6 +7,7 @@ import {
   gridSize,
   isRoomA3,
 } from './lostTempleUtils';
+import { NumberLike } from 'hashids/cjs/util';
 
 const hashIds = new HashIds('lost-temple-analyzer');
 const queryParam = 'p';
@@ -49,7 +50,14 @@ export function encodeQueryString(
 }
 
 export function decodeQueryString(queryString: string): InitialState {
-  const decodedNums = hashIds.decode(queryString);
+  let decodedNums: NumberLike[];
+  try {
+    decodedNums = hashIds.decode(queryString.replaceAll('/', ''));
+  } catch (e) {
+    // Handle faulty query param.
+    return defaultInitialState;
+  }
+
   if (!decodedNums) {
     // Handle faulty query param.
     return defaultInitialState;
