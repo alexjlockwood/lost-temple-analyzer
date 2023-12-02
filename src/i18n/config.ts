@@ -17,9 +17,10 @@ import { pl } from './pl';
 import { ru } from './ru';
 import { sv } from './sv';
 import { zh } from './zh';
+import { ja } from './ja';
 
 i18n.use(LanguageDetector).use(initReactI18next).init({
-  resources: { ar, de, en, es, fi, fr, he, id, it, ko, nb, nl, pl, ru, sv, zh },
+  resources: { ar, de, en, es, fi, fr, he, id, it, ko, nb, nl, pl, ru, sv, zh, ja },
   defaultNS: 'common',
   fallbackLng: 'en',
 });
