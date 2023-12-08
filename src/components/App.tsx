@@ -343,17 +343,20 @@ function App() {
             </HeaderContainer>
             <LostTempleContainer>{lostTemple}</LostTempleContainer>
           </ColumnContainer>
-          <Typography
-            paddingBottom={1}
-            align="center"
-            variant="caption"
-            sx={{
-              pb: 2,
-              opacity: 0.38,
-            }}
-          >
-            © Alex Lockwood 2022-{new Date().getFullYear()}
-          </Typography>
+          {columnContainerHeight === undefined ||
+          columnContainerHeight >= minColumnContainerHeight ? (
+            <Typography
+              paddingBottom={1}
+              align="center"
+              variant="caption"
+              sx={{
+                pb: 2,
+                opacity: 0.38,
+              }}
+            >
+              © Alex Lockwood 2022-{new Date().getFullYear()}
+            </Typography>
+          ) : undefined}
         </CopyrightContainer>
         {isPanelVisible ? (
           <PossiblePathsPanel
