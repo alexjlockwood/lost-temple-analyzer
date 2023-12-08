@@ -308,40 +308,53 @@ function App() {
   return (
     <AppContainer>
       <RowContainer>
-        <ColumnContainer ref={columnContainerRef}>
-          <HeaderContainer ref={headerContainerRef}>
-            {columnContainerHeight === undefined ||
-            columnContainerHeight >= minColumnContainerHeight ? (
-              <>
-                <Typography align="center" variant="subtitle1">
-                  {t('description')}
-                </Typography>
-                <Typography
-                  align="center"
-                  variant="body2"
-                  fontStyle="italic"
-                  sx={{
-                    pt: 1,
-                    opacity: 0.5,
-                    display: { xs: 'block', sm: 'block', md: 'none', lg: 'none', xl: 'none' },
-                  }}
-                >
-                  {t('viewOnLargerScreen')}
-                </Typography>
-              </>
-            ) : undefined}
+        <CopyrightContainer>
+          <ColumnContainer ref={columnContainerRef}>
+            <HeaderContainer ref={headerContainerRef}>
+              {columnContainerHeight === undefined ||
+              columnContainerHeight >= minColumnContainerHeight ? (
+                <>
+                  <Typography align="center" variant="subtitle1">
+                    {t('description')}
+                  </Typography>
+                  <Typography
+                    align="center"
+                    variant="body2"
+                    fontStyle="italic"
+                    sx={{
+                      pt: 1,
+                      opacity: 0.5,
+                      display: { xs: 'block', sm: 'block', md: 'none', lg: 'none', xl: 'none' },
+                    }}
+                  >
+                    {t('viewOnLargerScreen')}
+                  </Typography>
+                </>
+              ) : undefined}
 
-            <ButtonContainer>
-              <Button disabled={isInitialState} onClick={onResetClick} color="inherit">
-                {t('resetGridButton')}
-              </Button>
-              <Button disabled={isInitialState} onClick={onGetLinkClick} color="inherit">
-                {t('copyLinkButton')}
-              </Button>
-            </ButtonContainer>
-          </HeaderContainer>
-          <LostTempleContainer>{lostTemple}</LostTempleContainer>
-        </ColumnContainer>
+              <ButtonContainer>
+                <Button disabled={isInitialState} onClick={onResetClick} color="inherit">
+                  {t('resetGridButton')}
+                </Button>
+                <Button disabled={isInitialState} onClick={onGetLinkClick} color="inherit">
+                  {t('copyLinkButton')}
+                </Button>
+              </ButtonContainer>
+            </HeaderContainer>
+            <LostTempleContainer>{lostTemple}</LostTempleContainer>
+          </ColumnContainer>
+          <Typography
+            paddingBottom={1}
+            align="center"
+            variant="caption"
+            sx={{
+              pb: 2,
+              opacity: 0.38,
+            }}
+          >
+            © Alex Lockwood 2022-{new Date().getFullYear()}
+          </Typography>
+        </CopyrightContainer>
         {isPanelVisible ? (
           <PossiblePathsPanel
             width={panelWidth}
@@ -379,6 +392,16 @@ const RowContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const CopyrightContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  margin: ${columnContainerMargin}px;
 `;
 
 const ColumnContainer = styled.div`
