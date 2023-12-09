@@ -211,6 +211,7 @@ function App() {
   };
 
   const resetDragState = () => {
+    // Reset drag state in case Mac ever uses it.
     setPointerId(undefined);
     setIsDragging(false);
     setLastPointerOffset(undefined);
