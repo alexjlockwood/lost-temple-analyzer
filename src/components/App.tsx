@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import LostTemple, { getBottomDoorBounds, getRightDoorBounds, getRoomBounds } from './LostTemple';
 import { LostTemplePath } from '../scripts/lostTemplePath';
 import { lostTemplePaths } from '../scripts/lostTemplePathData';
-import { Alert, Button, Snackbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Alert, Button, Link, Snackbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import useResizeObserver from '@react-hook/resize-observer';
 
 import ReactGA from 'react-ga4';
@@ -346,17 +346,28 @@ function App() {
           </ColumnContainer>
           {columnContainerHeight === undefined ||
           columnContainerHeight >= minColumnContainerHeight ? (
-            <Typography
-              paddingBottom={1}
-              align="center"
-              variant="caption"
-              sx={{
-                pb: 2,
-                opacity: 0.38,
-              }}
-            >
-              © Alex Lockwood 2022-{new Date().getFullYear()}
-            </Typography>
+            <>
+              <span>
+                <Typography align="center" variant="caption" sx={{ opacity: 0.38 }}>
+                  View the{' '}
+                </Typography>
+                <Link variant="caption" href="https://rolloff.club" underline="hover">
+                  Roll Off website
+                </Link>
+              </span>
+              <Typography
+                paddingBottom={1}
+                align="center"
+                variant="caption"
+                sx={{
+                  pb: 2,
+                  pt: 1,
+                  opacity: 0.38,
+                }}
+              >
+                © Alex Lockwood 2022-{new Date().getFullYear()}
+              </Typography>
+            </>
           ) : undefined}
         </CopyrightContainer>
         {isPanelVisible ? (
