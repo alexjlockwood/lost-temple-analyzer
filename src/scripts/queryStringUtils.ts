@@ -58,7 +58,7 @@ export function decodeQueryString(queryString: string): InitialState {
     return defaultInitialState;
   }
 
-  if (!decodedNums) {
+  if (!decodedNums || !decodedNums.length) {
     // Handle faulty query param.
     return defaultInitialState;
   }
