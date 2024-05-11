@@ -1,11 +1,11 @@
 export const ja = {
   common: {
     description:
-      '下の部屋とドアをクリック、またはドラッグすると、条件を満たすさまざまなルートの確率が表示されます。ドアは1回クリックで開いた状態に、2回クリックで開かない状態に、3回クリックで未確定の状態にできます。',
+      '下の部屋やドアをクリック・ドラッグすると、さまざまなルートの確率が表示されます。ドアをクリックするごとに、開いた、開かない、未確定の状態にできます。',
     resetGridButton: 'ルートをリセット',
     copyLinkButton: 'リンクをコピー',
     copyLinkToClipboardSuccess: 'リンクをクリップボードにコピーしました',
-    copyLinkToClipboardError: 'リンクのコピーができませんでした',
+    copyLinkToClipboardError: 'リンクのコピーができません',
     possiblePaths_zero: '{{count}}通りのルート',
     possiblePaths_one: '{{count}}通りのルート',
     possiblePaths_two: '{{count}}通りのルート',
