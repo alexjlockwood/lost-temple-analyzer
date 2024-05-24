@@ -159,7 +159,7 @@ function App() {
         Array.from(closedDoors).every((door) => !pathOpenDoors.has(door))
       );
     })
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b.percent - a.percent);
 
   const roomPercentMap = debugHideProbabilities
     ? undefined
@@ -454,14 +454,14 @@ function createPercentMap(
   paths: readonly LostTemplePath[],
   matchesPath: (name: string, path: LostTemplePath) => boolean,
 ): ReadonlyMap<string, number> {
-  const totalPathCount = paths.reduce((p, c) => p + c.count, 0);
+  const totalPercent = paths.reduce((p, c) => p + c.percent, 0);
   const map = new Map<string, number>();
   names.forEach((name) => {
-    if (totalPathCount) {
-      const count = paths
+    if (totalPercent) {
+      const percent = paths
         .filter((path) => matchesPath(name, path))
-        .reduce((p, c) => p + c.count, 0);
-      map.set(name, (count / totalPathCount) * 100);
+        .reduce((p, c) => p + c.percent, 0);
+      map.set(name, (percent / totalPercent) * 100);
     } else {
       map.set(name, 0);
     }

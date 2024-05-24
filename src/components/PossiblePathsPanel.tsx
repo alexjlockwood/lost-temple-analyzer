@@ -1,5 +1,6 @@
 import React from 'react';
 import { LostTemplePath } from '../scripts/lostTemplePath';
+import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import LostTemple from './LostTemple';
 import styled from '@emotion/styled';
 import { Paper, Typography } from '@mui/material';
@@ -25,19 +26,11 @@ function PossiblePathsPanel({
 }: PossiblePathsPanelProps) {
   const { t } = useTranslation();
   const columnWidth = (width - 2 * sidePanelPadding - (numColumns - 1) * gridPadding) / numColumns;
-  const filteredCount = possiblePaths.reduce((p, c) => p + c.count, 0);
-  const lostTemplePaths = possiblePaths.map((p) => {
+  const possiblePathsPercentSum = possiblePaths.reduce((p, c) => p + c.percent, 0);
+  const ltPaths = possiblePaths.map((p) => {
     const knownRooms = intersection(p.openRooms, openRooms);
     const knownDoors = intersection(p.openDoors, openDoors);
-    const percent = p.count / filteredCount;
-    let textPercent: number;
-    if (percent < 0.001) {
-      textPercent = Math.round(percent * 10000) / 100;
-    } else if (percent < 0.0001) {
-      textPercent = Math.round(percent * 100000) / 1000;
-    } else {
-      textPercent = Math.round(percent * 1000) / 10;
-    }
+    const filteredPercent = `${getPercentString(p.percent / possiblePathsPercentSum)}%`;
     return (
       <ItemContainer key={p.key}>
         <LostTemple
@@ -49,7 +42,7 @@ function PossiblePathsPanel({
           showRoomNames={false}
         />
         <Typography align="center" variant="body2">
-          {`${p.count} / ${filteredCount} (${textPercent}%)`}
+          {`${filteredPercent}`}
         </Typography>
       </ItemContainer>
     );
@@ -72,11 +65,22 @@ function PossiblePathsPanel({
       <ColumnContainer>
         <Typography variant="h6">{possiblePathText}</Typography>
         <GridContainer numColumns={numColumns} columnWidth={columnWidth}>
-          {lostTemplePaths}
+          {ltPaths}
         </GridContainer>
       </ColumnContainer>
     </SidePanel>
   );
+}
+
+function getPercentString(percent: number): string {
+  const roundedPercent = Math.round(percent * 1000000) / 10000;
+  if (roundedPercent < 0.1) {
+    return roundedPercent.toFixed(3);
+  } else if (roundedPercent < 10) {
+    return roundedPercent.toFixed(2);
+  } else {
+    return roundedPercent.toFixed(1);
+  }
 }
 
 const sidePanelPadding = 16;

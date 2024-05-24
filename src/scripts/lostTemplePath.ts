@@ -2,5 +2,5 @@ export interface LostTemplePath {
   readonly key: number;
   readonly openDoors: ReadonlySet<string>;
   readonly openRooms: ReadonlySet<string>;
-  readonly count: number;
+  readonly percent: number;
 }
