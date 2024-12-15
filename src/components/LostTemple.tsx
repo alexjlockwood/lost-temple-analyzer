@@ -58,7 +58,11 @@ function LostTemple({
     if (percent === undefined || percent === 0 || percent === 100) {
       return undefined;
     }
-    return `${Math.round(Math.max(Math.min(percent, 99), 1))}%`;
+    const constrainedPercent = Math.max(Math.min(percent, 99), 1);
+    if (constrainedPercent < 10) {
+      return `${Math.round(constrainedPercent * 10) / 10}%`;
+    }
+    return `${Math.round(constrainedPercent)}%`;
   };
 
   for (let r = 0; r < gridSize; r++) {
