@@ -315,7 +315,7 @@ function App() {
               {columnContainerHeight === undefined ||
               columnContainerHeight >= minColumnContainerHeight ? (
                 <>
-                  <Typography align="center" variant="subtitle1">
+                  <Typography style={{ whiteSpace: 'pre-line' }} align="center" variant="subtitle1">
                     {t('description')}
                   </Typography>
                   <Typography
