@@ -1,6 +1,5 @@
 import React from 'react';
 import { LostTemplePath } from '../scripts/lostTemplePath';
-import { lostTemplePaths } from '../scripts/lostTemplePathData';
 import LostTemple from './LostTemple';
 import styled from '@emotion/styled';
 import { Paper, Typography } from '@mui/material';
