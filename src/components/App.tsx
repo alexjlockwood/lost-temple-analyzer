@@ -365,7 +365,7 @@ function App() {
                   opacity: 0.38,
                 }}
               >
-                © Alex Lockwood 2022-{new Date().getFullYear()}
+                © alexjl 2022-{new Date().getFullYear()}
               </Typography>
             </>
           ) : undefined}
