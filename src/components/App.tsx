@@ -82,6 +82,7 @@ function App() {
   const [openDoors, setOpenDoors] = useState<ReadonlySet<string>>(initialState.openDoors);
   const [closedDoors, setClosedDoors] = useState<ReadonlySet<string>>(initialState.closedDoors);
   const [isDragging, setIsDragging] = useState(false);
+  const [isRightClicking, setIsRightClicking] = useState(false);
   const [lastPointerOffset, setLastPointerOffset] = useState<Offset | undefined>(undefined);
   const [pointerId, setPointerId] = useState<number | undefined>(undefined);
 
@@ -210,10 +211,22 @@ function App() {
     setClosedDoors(updatedClosedDoors);
   };
 
+  const unselectRoom = (roomName: string) => {
+    const updatedOpenRooms = new Set(openRooms);
+    updatedOpenRooms.delete(roomName);
+    setOpenRooms(updatedOpenRooms);
+  };
+
+  const unselectDoor = (doorName: string) => {
+    const updatedOpenDoors = new Set(openDoors);
+    updatedOpenDoors.delete(doorName);
+    setOpenDoors(updatedOpenDoors);
+  };
+
   const resetDragState = () => {
-    // Reset drag state in case Mac ever uses it.
     setPointerId(undefined);
     setIsDragging(false);
+    setIsRightClicking(false);
     setLastPointerOffset(undefined);
   };
   const onPointerDown: React.PointerEventHandler<HTMLDivElement> = (event) => {
@@ -221,6 +234,7 @@ function App() {
       return;
     }
     setPointerId(event.pointerId);
+    setIsRightClicking(event.pointerType === 'mouse' && event.button === 2);
     setIsDragging(true);
     const rect = event.currentTarget.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
@@ -250,11 +264,19 @@ function App() {
             !isRoomA3(r, c) &&
             intersects(getRoomBounds(r, c, size), offsetX, offsetY, prevX, prevY)
           ) {
-            selectRoom(getRoomName(r, c));
+            if (isRightClicking) {
+              unselectRoom(getRoomName(r, c));
+            } else {
+              selectRoom(getRoomName(r, c));
+            }
           }
           if (c !== gridSize - 1) {
             if (intersects(getRightDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)) {
-              selectDoor(getRightDoorName(r, c));
+              if (isRightClicking) {
+                unselectDoor(getRightDoorName(r, c));
+              } else {
+                selectDoor(getRightDoorName(r, c));
+              }
             }
           }
           if (r !== gridSize - 1) {
@@ -262,7 +284,11 @@ function App() {
               !isBottomDoorA3B3(r, c) &&
               intersects(getBottomDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)
             ) {
-              selectDoor(getBottomDoorName(r, c));
+              if (isRightClicking) {
+                unselectDoor(getBottomDoorName(r, c));
+              } else {
+                selectDoor(getBottomDoorName(r, c));
+              }
             }
           }
         }

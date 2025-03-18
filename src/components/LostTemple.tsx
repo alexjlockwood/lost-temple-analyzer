@@ -130,6 +130,7 @@ function LostTemple({
   }
   return (
     <Container
+      onContextMenu={(event) => event.preventDefault()}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
