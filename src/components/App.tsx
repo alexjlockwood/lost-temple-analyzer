@@ -264,7 +264,7 @@ function App() {
             !isRoomA3(r, c) &&
             intersects(getRoomBounds(r, c, size), offsetX, offsetY, prevX, prevY)
           ) {
-            if (isRightClicking) {
+            if (isRightClicking || event.shiftKey) {
               unselectRoom(getRoomName(r, c));
             } else {
               selectRoom(getRoomName(r, c));
@@ -272,7 +272,7 @@ function App() {
           }
           if (c !== gridSize - 1) {
             if (intersects(getRightDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)) {
-              if (isRightClicking) {
+              if (isRightClicking || event.shiftKey) {
                 unselectDoor(getRightDoorName(r, c));
               } else {
                 selectDoor(getRightDoorName(r, c));
@@ -284,7 +284,7 @@ function App() {
               !isBottomDoorA3B3(r, c) &&
               intersects(getBottomDoorBounds(r, c, size), offsetX, offsetY, prevX, prevY)
             ) {
-              if (isRightClicking) {
+              if (isRightClicking || event.shiftKey) {
                 unselectDoor(getBottomDoorName(r, c));
               } else {
                 selectDoor(getBottomDoorName(r, c));
